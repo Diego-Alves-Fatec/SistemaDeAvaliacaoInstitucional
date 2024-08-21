@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Questões</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Poppins', Arial, sans-serif;
+            color: #333;
+        }
+
+        body {
+            background-color: #ffffff;
+            margin: 0;
+            font-family: 'Poppins', Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            height: auto;
+            overflow: auto;
+        }
+
+        body ::placeholder {
+            color: #333;
+            opacity: 1;
+        }
+
+        main {
+            height: auto;
+            width: 70%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .menu-lateral {
+            width: 250px;
+            background-color: #2b4c7e;
+            height: 100%;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        .menu-lateral h2 {
+            font-size: 24px;
+            margin: 0 0 20px;
+            color: #ffffff;
+        }
+
+        .menu-lateral a {
+            display: block;
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 18px;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .menu-lateral a:hover {
+            background-color: #567ebb;
+        }
+
+        .form-container {
+            padding: 0 20px;
+            width: 100%;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        #form-main {
+            background-color: #f4f7fa;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            width: 100%;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+
+        #form-main h2 {
+            margin: 0 0 15px;
+            font-size: 28px;
+            color: #2b3e50;
+        }
+
+        #form-main input[type="text"],
+        #form-main input[type="number"],
+        #form-main select,
+        #form-main textarea {
+            margin-bottom: 15px;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        #form-main textarea {
+            resize: vertical;
+        }
+
+        #form-main input[type="number"] {
+            appearance: textfield;
+            -moz-appearance: textfield;
+            -webkit-appearance: none;
+        }
+
+        #form-main input[type="number"]::-webkit-inner-spin-button,
+        #form-main input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        #form-main button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            font-size: 14px;
+            border: none;
+            border-radius: 5px;
+            background-color: #2b4c7e;
+            color: #ffffff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 30%;
+        }
+
+        #form-main button:hover {
+            background-color: #567ebb;
+        }
+
+        #opcoes-adicionais {
+            display: none;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .opcao-input {
+            margin-bottom: 15px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+
+<body>
+<main>
+    <div th:include="fragmentos/menu.html :: menu-lateral"></div>
+    <div class="form-container">
+        <div id="form-main">
+            <h2>Incluir de Questões</h2>
+            <form action="#" method="POST">
+                <input type="number" placeholder="Informe o número da questão">
+                <input type="text" placeholder="Informe a área da questão">
+                <textarea placeholder="Informe a questão" required rows="4"></textarea>
+                <select id="avaliacao-tipo" name="avaliacao-tipo" onchange="toggleOptions()">
+                    <option value="1">Autoavaliação Institucional</option>
+                    <option value="2">Avaliação de Satisfação</option>
+                </select>
+                <select id="questao-tipo" name="questao-tipo" onchange="toggleOptions()">
+                    <option value="unica">Descritiva</option>
+                    <option value="multipla">Múltipla Escolha</option>
+                </select>
+                <div id="opcoes-adicionais">
+                    <input type="number" id="num-opcoes" placeholder="Número de opções" min="2" max="10"
+                           oninput="generateOptions()">
+                    <div id="opcoes-container"></div>
+                </div>
+                <button type="submit">Cadastrar</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function toggleOptions() {
+            const questionType = document.getElementById('questao-tipo').value;
+            const additionalOptions = document.getElementById('opcoes-adicionais');
+
+            if (questionType === 'multipla') {
+                additionalOptions.style.display = 'block';
+                generateOptions();
+            } else {
+                additionalOptions.style.display = 'none';
+                document.getElementById('opcoes-container').innerHTML = ''; // Limpa as opções ao selecionar escolha única
+            }
+        }
+
+        function generateOptions() {
+            const numOptions = Math.max(4, Math.min(10, parseInt(document.getElementById('num-opcoes').value) || 0));
+            const optionsContainer = document.getElementById('opcoes-container');
+
+            optionsContainer.innerHTML = ''; // Limpa opções existentes
+
+            for (let i = 0; i < numOptions; i++) {
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.className = 'opcao-input';
+                input.placeholder = `Opção ${i + 1}`;
+                optionsContainer.appendChild(input);
+            }
+        }
+    </script>
+
+</body>
+
+</html>

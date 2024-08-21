@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de Questões</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Poppins', Arial, sans-serif;
+            color: #333;
+        }
+
+        body {
+            background-color: #ffffff;
+            margin: 0;
+            font-family: 'Poppins', Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            height: auto;
+            overflow: auto;
+        }
+
+        main {
+            height: auto;
+            width: 70%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .menu-lateral {
+            width: 250px;
+            background-color: #2b4c7e;
+            height: 100%;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        .menu-lateral h2 {
+            font-size: 24px;
+            margin: 0 0 20px;
+            color: #ffffff;
+        }
+
+        .menu-lateral a {
+            display: block;
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 18px;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .menu-lateral a:hover {
+            background-color: #567ebb;
+        }
+
+        .content-container {
+            padding: 20px;
+            width: 100%;
+            box-sizing: border-box;
+            overflow-y: auto;
+            height: 100vh;
+        }
+
+        #questions-container {
+            background-color: #f4f7fa;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            width: 100%;
+
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .question h3 {
+            margin: 0 0 10px;
+            font-size: 28px;
+            color: #2b3e50;
+        }
+
+        .question ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .question li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+
+<body>
+<main>
+    <div th:include="fragmentos/menu.html :: menu-lateral"></div>
+    <div class="content-container">
+        <div id="questions-container">
+            <!-- As questões serão carregadas aqui -->
+        </div>
+    </div>
+</main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Simulação de dados JSON
+        const jsonData = [
+            {
+                "id": 1,
+                "question": "Qual é a capital da França?",
+                "type": "single",
+                "options": ["Paris", "Londres", "Berlim", "Madri"]
+            },
+            {
+                "id": 2,
+                "question": "Selecione as cores primárias.",
+                "type": "multiple",
+                "options": ["Vermelho", "Verde", "Azul", "Amarelo"]
+            },
+            {
+                "id": 3,
+                "question": "Qual é a fórmula da água?",
+                "type": "single",
+                "options": ["H2O", "CO2", "O2", "NaCl"]
+            }
+        ];
+
+        // Função para exibir as questões
+        function displayQuestions(questions) {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = ''; // Limpa o conteúdo existente
+
+            questions.forEach(question => {
+                const questionElement = document.createElement('div');
+                questionElement.className = 'question';
+
+                const questionTitle = document.createElement('h3');
+                questionTitle.textContent = `Questão ${question.id}: ${question.question}`;
+                questionElement.appendChild(questionTitle);
+
+                const optionsList = document.createElement('ul');
+                question.options.forEach(option => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = option;
+                    optionsList.appendChild(listItem);
+                });
+                questionElement.appendChild(optionsList);
+
+                container.appendChild(questionElement);
+            });
+        }
+
+        // Carrega as questões ao iniciar
+        displayQuestions(jsonData);
+    });
+</script>
+</body>
+
+</html>
