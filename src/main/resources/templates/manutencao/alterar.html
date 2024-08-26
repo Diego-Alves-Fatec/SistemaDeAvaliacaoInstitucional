@@ -52,6 +52,7 @@
             font-size: 24px;
             margin: 0 0 20px;
             color: #ffffff;
+            padding-left: 10px;
         }
 
         .menu-lateral a {
@@ -76,7 +77,7 @@
             overflow-y: auto;
         }
 
-        #form-main {
+        #main {
             background-color: #f4f7fa;
             text-align: center;
             padding: 20px;
@@ -87,16 +88,16 @@
             box-sizing: border-box;
         }
 
-        #form-main h2 {
+        #main h2 {
             margin: 0 0 15px;
             font-size: 28px;
             color: #2b3e50;
         }
 
-        #form-main input[type="text"],
-        #form-main input[type="number"],
-        #form-main select,
-        #form-main textarea {
+        #main input[type="text"],
+        #main input[type="number"],
+        #main select,
+        #main textarea {
             margin-bottom: 15px;
             padding: 12px;
             font-size: 16px;
@@ -106,23 +107,23 @@
             box-sizing: border-box;
         }
 
-        #form-main textarea {
+        #main textarea {
             resize: vertical;
         }
 
-        #form-main input[type="number"] {
+        #main input[type="number"] {
             appearance: textfield;
             -moz-appearance: textfield;
             -webkit-appearance: none;
         }
 
-        #form-main input[type="number"]::-webkit-inner-spin-button,
-        #form-main input[type="number"]::-webkit-outer-spin-button {
+        #main input[type="number"]::-webkit-inner-spin-button,
+        #main input[type="number"]::-webkit-outer-spin-button {
             -webkit-appearance: none;
             margin: 0;
         }
 
-        #form-main button {
+        #main button {
             margin-top: 15px;
             padding: 10px 20px;
             font-size: 14px;
@@ -135,7 +136,7 @@
             width: 30%;
         }
 
-        #form-main button:hover {
+        #main button:hover {
             background-color: #567ebb;
         }
 
@@ -155,27 +156,28 @@
 
 <body>
 <main>
-    <div th:include="fragmentos/menu.html :: menu-lateral"></div>
+    <div th:replace="~{fragmentos/menu.html :: menu-lateral}"></div>
     <div class="form-container">
-        <div id="form-main">
+        <div id="main">
             <h2>Alteração de Questões</h2>
             <form action="#" method="POST">
                 <input type="number" placeholder="Informe o número da questão">
-                <input type="text" placeholder="Informe a área da questão">
-                <textarea placeholder="Informe a questão" required rows="4"></textarea>
-                <select id="avaliacao-tipo" name="avaliacao-tipo" onchange="toggleOptions()">
+                <select id="tipoAvaliacao" name="tipoAvaliacao" onchange="toggleOptions()">
+                    <option value="" disabled selected>Tipo de Avaliação</option>
                     <option value="1">Autoavaliação Institucional</option>
                     <option value="2">Avaliação de Satisfação</option>
                 </select>
-                <select id="questao-tipo" name="questao-tipo" onchange="toggleOptions()">
-                    <option value="unica">Descritiva</option>
-                    <option value="multipla">Múltipla Escolha</option>
-                </select>
-                <div id="opcoes-adicionais">
-                    <input type="number" id="num-opcoes" placeholder="Número de opções" min="2" max="10"
-                           oninput="generateOptions()">
-                    <div id="opcoes-container"></div>
-                </div>
+<!--                <input type="text" placeholder="Informe a área da questão">-->
+<!--                <textarea placeholder="Informe a questão" required rows="4"></textarea>                -->
+<!--                <select id="questao-tipo" name="questao-tipo" onchange="toggleOptions()">-->
+<!--                    <option value="unica">Descritiva</option>-->
+<!--                    <option value="multipla">Múltipla Escolha</option>-->
+<!--                </select>-->
+<!--                <div id="opcoes-adicionais">-->
+<!--                    <input type="number" id="num-opcoes" placeholder="Número de opções" min="2" max="10"-->
+<!--                           oninput="generateOptions()">-->
+<!--                    <div id="opcoes-container"></div>-->
+<!--                </div>-->
                 <button type="submit">Alterar</button>
             </form>
         </div>

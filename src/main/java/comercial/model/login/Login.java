@@ -10,7 +10,6 @@ public class Login {
     private String login;
     private String senha;
 
-    // Getters e Setters
     public String getLogin() {
         return login;
     }

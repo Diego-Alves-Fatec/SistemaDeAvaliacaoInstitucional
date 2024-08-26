@@ -47,6 +47,7 @@
             font-size: 24px;
             margin: 0 0 20px;
             color: #ffffff;
+            padding-left: 10px;
         }
 
         .menu-lateral a {
@@ -71,7 +72,7 @@
             overflow-y: scroll;
         }
 
-        #form-main {
+        #main {
             background-color: #f4f7fa;
             text-align: center;
             padding: 20px;
@@ -82,14 +83,14 @@
             box-sizing: border-box;
         }
 
-        #form-main h2 {
+        #main h2 {
             margin: 0 0 15px;
             font-size: 28px;
             color: #2b3e50;
         }
 
-        #form-main select,
-        #form-main input[type="text"] {
+        #main select,
+        #main input[type="text"] {
             margin-bottom: 15px;
             padding: 12px;
             font-size: 16px;
@@ -99,22 +100,22 @@
             box-sizing: border-box;
         }
 
-        #form-main input[type="number"] {
+        #main input[type="number"] {
             width: calc(70% - 10px);
         }
 
-        #form-main .input-button {
+        #main .input-button {
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 15px;
         }
 
-        #form-main .input-button input[type="text"] {
+        #main .input-button input[type="text"] {
             margin-right: 10px;
         }
 
-        #form-main .button {
+        #main .button {
             background-color: #5C7FBC; /* Azul claro para o botão "Adicionar Filtro" */
             color: #ffffff;
             cursor: pointer;
@@ -127,11 +128,11 @@
 
         }
 
-        #form-main .button:hover {
+        #main .button:hover {
             background-color: #4a6aa9; /* Tom mais escuro de azul claro */
         }
 
-        #form-main button {
+        #main button {
             background-color: #2b4c7e; /* Azul escuro para o botão "Consultar" */
             color: #ffffff;
             cursor: pointer;
@@ -144,11 +145,11 @@
             margin: 12px 0 0 0;
         }
 
-        #form-main button:hover {
+        #main button:hover {
             background-color: #567ebb;
         }
 
-        #form-main .input-button input[type="text"] {
+        #main .input-button input[type="text"] {
             margin-right: 10px;
             margin-bottom: 0;
         }
@@ -166,13 +167,13 @@
 
 <body>
 <main>
-    <div th:include="fragmentos/menu.html :: menu-lateral"></div>
+    <div th:replace="~{fragmentos/menu.html :: menu-lateral}"></div>
     <div class="form-container">
-        <div id="form-main">
+        <div id="main">
             <h2>Consulta de Questões</h2>
             <h3>Escolha os Filtros</h3>
             <form action="/manutencao/consultar-resultados" method="POST">
-                <select id="filtro" name="avaliacao-tipo" onchange="toggleOptions()">
+                <select id="filtro" name="tipoAvaliacao" onchange="toggleOptions()">
                     <option value="" disabled selected>Tipo de Filtro</option>
                     <option value="1">Número da Questão</option>
                     <option value="2">Texto da questão</option>

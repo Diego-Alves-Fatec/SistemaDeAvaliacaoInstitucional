@@ -16,29 +16,18 @@ public class LoginController extends BaseController {
     @Autowired
     private LoginService loginService;
 
-    @PostMapping("/formIndex")
-    public String ValidaLogin(@ModelAttribute("formData") Map<String, String> formData, Model model) {
-        String login = formData.get("login");
-        String senha = formData.get("senha");
+    @PostMapping("/formLogin")
+    public String ValidaLogin(@ModelAttribute("formData") Map<String, String> formData, Model model) throws Exception {
 
-        boolean isValid = loginService.validaUsuario(login, senha);
+        boolean isValid = loginService.validaUsuario(formData);
 
-        String boasVindas = "Seja bem vindo(a)" + login + "!";
-
-        if ("1".equals(login)) {
-            return "manutencao/incluir";
+        if (isValid) {
+            model.addAttribute("mensagem", "Login bem-sucedido!");
+            return "redirect:/manutencao/exibirIncluir";
         } else {
-            return "questionario/perguntas";
+            model.addAttribute("mensagem", "Login ou Senha incorreta!");
+            return "index";
         }
-
-//        if (isValid) {
-//            model.addAttribute("mensagem", "Login bem-sucedido!");
-//            return "dashboard";
-//        } else {
-//            String mensagemDinamica = "Login ou Senha incorreta!";
-//            model.addAttribute("mensagem", mensagemDinamica);
-//            return "index";
-//        }
     }
 
 

@@ -108,7 +108,7 @@
 
 <body>
 <main>
-    <div th:include="fragmentos/menu.html :: menu-lateral"></div>
+    <div th:replace="~{fragmentos/menu.html :: menu-lateral}"></div>
     <div class="content-container">
         <div id="questions-container">
             <!-- As questões serão carregadas aqui -->
