@@ -1,5 +1,5 @@
 function toggleOptions() {
-    const questionType = document.getElementById('tipo-questao').value;
+    const questionType = document.getElementById('tipoQuestao').value;
     const additionalOptions = document.getElementById('opcoes-adicionais');
 
     if (questionType === '2') {
@@ -22,6 +22,23 @@ function generateOptions() {
         input.type = 'text';
         input.className = 'opcao-input';
         input.placeholder = `Opção ${i + 1}`;
+        input.name = `flag${i + 1}`;
         optionsContainer.appendChild(input);
     }
 }
+
+// function prepareCheckboxes() {
+//     // Seleciona todos os checkboxes marcados com o nome 'tipoPerfil'
+//     const checkboxes = document.querySelectorAll('input[name="tipoPerfilCheckbox"]:checked');
+//
+//     // Cria um array com os valores dos checkboxes selecionados
+//     const selectedValues = Array.from(checkboxes).map(checkbox => checkbox.value);
+//
+//     // Transforma o array de valores em uma string, separada por vírgulas
+//     const selectedValuesString = selectedValues.join(',');
+//
+//     // Define a string no campo oculto que será enviado no formulário
+//     document.getElementById('tipoPerfil').value = selectedValuesString;
+// }
+
+

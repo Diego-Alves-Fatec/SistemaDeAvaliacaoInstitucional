@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ItemDominioRepository extends JpaRepository<ItemDominio, Integer> {
-    List<ItemDominio> findItemDominiosByFkCdDominio(Dominio fkCdDominio);
+    List<ItemDominio> findItemDominioByFkCdDominio(Dominio fkCdDominio);
 
 }

@@ -8,10 +8,7 @@ import comercial.model.manutencao.questoes.QuestoesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +25,7 @@ public class ManutencaoController extends BaseController {
     public String exibirIncluir(Model model) {
 
         Map<String,?> formData = new HashMap<>();
-        formData.put("operacao",DominioTipoOperacao.INCLUIR);
+//        formData.put("operacao",DominioTipoOperacao.INCLUIR);
         questoesService.carregarCombo(formData);
         model.addAttribute("formData", formData);
 

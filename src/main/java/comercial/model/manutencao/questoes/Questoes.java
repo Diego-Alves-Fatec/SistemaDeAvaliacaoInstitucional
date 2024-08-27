@@ -1,12 +1,13 @@
 package comercial.model.manutencao.questoes;
 
-import comercial.model.dominio.Dominio;
+import comercial.model.manutencao.item_dominio.ItemDominio;
 import jakarta.persistence.*;
 
 @Entity
 public class Questoes {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name="CD_QUESTAO")
@@ -14,22 +15,17 @@ public class Questoes {
 
     @ManyToOne
     @JoinColumn(name="FK_FLAG_TIPO_AVALIACAO")
-    private Dominio flagTipoAvaliacao;
+    private ItemDominio flagTipoAvaliacao;
 
     @ManyToOne
     @JoinColumn(name="FK_FLAG_CATEGORIA_QUESTAO")
-    private Dominio flagCategoriaQuestao;
+    private ItemDominio flagCategoriaQuestao;
 
     @ManyToOne
     @JoinColumn(name="FK_FLAG_TIPO_QUESTAO")
-    private Dominio flagTipoQuestao;
-
-    @ManyToOne
-    @JoinColumn(name="FK_FLAG_PERFIL")
-    private Dominio flagPerfil;
+    private ItemDominio flagTipoQuestao;
 
     public int getId() {
-
         return id;
     }
 
@@ -45,35 +41,27 @@ public class Questoes {
         this.cdQuestao = cdQuestao;
     }
 
-    public Dominio getFlagTipoAvaliacao() {
+    public ItemDominio getFlagTipoAvaliacao() {
         return flagTipoAvaliacao;
     }
 
-    public void setFlagTipoAvaliacao(Dominio flagTipoAvaliacao) {
+    public void setFlagTipoAvaliacao(ItemDominio flagTipoAvaliacao) {
         this.flagTipoAvaliacao = flagTipoAvaliacao;
     }
 
-    public Dominio getFlagCategoriaQuestao() {
+    public ItemDominio getFlagCategoriaQuestao() {
         return flagCategoriaQuestao;
     }
 
-    public void setFlagCategoriaQuestao(Dominio flagCategoriaQuestao) {
+    public void setFlagCategoriaQuestao(ItemDominio flagCategoriaQuestao) {
         this.flagCategoriaQuestao = flagCategoriaQuestao;
     }
 
-    public Dominio getFlagTipoQuestao() {
+    public ItemDominio getFlagTipoQuestao() {
         return flagTipoQuestao;
     }
 
-    public void setFlagTipoQuestao(Dominio flagTipoQuestao) {
+    public void setFlagTipoQuestao(ItemDominio flagTipoQuestao) {
         this.flagTipoQuestao = flagTipoQuestao;
-    }
-
-    public Dominio getFlagPerfil() {
-        return flagPerfil;
-    }
-
-    public void setFlagPerfil(Dominio flagPerfil) {
-        this.flagPerfil = flagPerfil;
     }
 }

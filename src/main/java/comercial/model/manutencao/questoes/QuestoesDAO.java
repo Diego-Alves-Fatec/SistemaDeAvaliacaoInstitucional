@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class QuestoesDAO {
@@ -17,8 +18,6 @@ public class QuestoesDAO {
 
     @Autowired
     ItemDominioRepository itemDominioRepository;
-
-    @Autowired
 
 
 //    @Autowired
@@ -35,4 +34,8 @@ public class QuestoesDAO {
 
 
 
+
+    public void incluirQuestao(Questoes questoes) {
+        questoesRepository.save(questoes);
+    }
 }

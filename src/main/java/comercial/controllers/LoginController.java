@@ -26,7 +26,7 @@ public class LoginController extends BaseController {
             return "redirect:/manutencao/exibirIncluir";
         } else {
             model.addAttribute("mensagem", "Login ou Senha incorreta!");
-            return "index";
+            return "questionario/perguntas";
         }
     }
 
