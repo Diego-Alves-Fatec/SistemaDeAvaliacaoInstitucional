@@ -3,15 +3,60 @@
 <head>
     <meta charset="UTF-8">
 </head>
+<style>
+
+</style>
 <body>
 <div th:fragment="menu-lateral">
     <div class="menu-lateral">
-        <h2>Menu</h2>
-        <a th:href="@{/manutencao/exibirIncluir}">Incluir</a>
-        <a th:href="@{/manutencao/consultar}">Consultar</a>
-        <a th:href="@{/manutencao/alterar}">Alterar</a>
-        <a th:href="@{/manutencao/incluir}">Excluir</a>
+        <a onclick="toggleSubmenu('questoes')">Questões</a>
+        <div id="questoes">
+            <a th:href="@{/manutencao/exibirIncluir}">Incluir</a>
+            <a th:href="@{/manutencao/consultar}">Consultar</a>
+            <a th:href="@{/manutencao/alterar}">Alterar</a>
+            <a th:href="@{/manutencao/incluir}">Excluir</a>
+        </div>
+        <a onclick="toggleSubmenu('categorias')">Categorias</a>
+        <div id="categorias">
+            <a th:href="@{/manutencao/exibirIncluir}">Incluir</a>
+            <a th:href="@{/manutencao/consultar}">Consultar</a>
+            <a th:href="@{/manutencao/alterar}">Alterar</a>
+            <a th:href="@{/manutencao/incluir}">Excluir</a>
+        </div>
+        <a onclick="toggleSubmenu('respondentes')">Respondentes</a>
+        <div id="respondentes">
+            <a th:href="@{/manutencao/exibirIncluir}">Incluir</a>
+            <a th:href="@{/manutencao/consultar}">Consultar</a>
+            <a th:href="@{/manutencao/alterar}">Alterar</a>
+            <a th:href="@{/manutencao/incluir}">Excluir</a>
+        </div>
+        <a onclick="toggleSubmenu('curso-materia')">Curso/Materia</a>
+        <div id="curso-materia">
+            <a th:href="@{/manutencao/exibirIncluir}">Incluir</a>
+            <a th:href="@{/manutencao/consultar}">Consultar</a>
+            <a th:href="@{/manutencao/alterar}">Alterar</a>
+            <a th:href="@{/manutencao/incluir}">Excluir</a>
+        </div>
+        <a onclick="toggleSubmenu('avaliacoes')">Avaliações</a>
+        <div id="avaliacoes">
+            <a onclick="toggleSubmenu('autoavaliacao')">Autoavaliação Institucional</a>
+            <div id="autoavaliacao">
+                <a th:href="@{/manutencao/exibirIncluir}">Incluir</a>
+                <a th:href="@{/manutencao/consultar}">Consultar</a>
+                <a th:href="@{/manutencao/alterar}">Alterar</a>
+                <a th:href="@{/manutencao/incluir}">Excluir</a>
+            </div>
+
+            <a onclick="toggleSubmenu('avaliacao-satisfacao')">Avaliação de Satisfação</a>
+            <div id="avaliacao-satisfacao">
+                <a th:href="@{/manutencao/exibirIncluir}">Incluir</a>
+                <a th:href="@{/manutencao/consultar}">Consultar</a>
+                <a th:href="@{/manutencao/alterar}">Alterar</a>
+                <a th:href="@{/manutencao/incluir}">Excluir</a>
+            </div>
+        </div>
         <a th:href="@{/}">Sair</a>
+
     </div>
 </div>
 </body>

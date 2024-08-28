@@ -65,6 +65,49 @@
             background-color: #567ebb;
         }
 
+        #questoes {
+            display: none;
+            margin-left: 20px;
+        }
+
+        #categorias {
+            display: none;
+            margin-left: 20px;
+        }
+
+        #respondentes {
+            display: none;
+            margin-left: 20px;
+        }
+
+        #curso-materia {
+            display: none;
+            margin-left: 20px;
+        }
+
+        #avaliacoes {
+            display: none;
+            margin-left: 20px;
+        }
+
+        #autoavaliacao {
+            display: none;
+            margin-left: 20px;
+        }
+
+        #avaliacao-satisfacao {
+            display: none;
+            margin-left: 20px;
+        }
+
+        #tipo-avaliacao {
+            display: none;
+        }
+
+        #operador-logico {
+            display: none;
+        }
+
         .form-container {
             padding: 0 20px;
             width: 100%;
@@ -89,11 +132,13 @@
             color: #2b3e50;
         }
 
+        #main input[type="text"],
+        #main input[type="number"],
         #main select,
-        #main input[type="text"] {
+        #main textarea {
             margin-bottom: 15px;
             padding: 12px;
-            font-size: 16px;
+            font-size: 1rem;
             border: 1px solid #cccccc;
             border-radius: 5px;
             width: 100%;
@@ -101,39 +146,19 @@
         }
 
         #main input[type="number"] {
-            width: calc(70% - 10px);
+            appearance: textfield;
+            -moz-appearance: textfield;
+            -webkit-appearance: none;
         }
 
-        #main .input-button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 15px;
-        }
-
-        #main .input-button input[type="text"] {
-            margin-right: 10px;
-        }
-
-        #main .button {
-            background-color: #5C7FBC; /* Azul claro para o botão "Adicionar Filtro" */
-            color: #ffffff;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            padding: 14px 20px;
-            font-size: 14px;
-            border: none;
-            border-radius: 5px;
-            width: auto;
-
-        }
-
-        #main .button:hover {
-            background-color: #4a6aa9; /* Tom mais escuro de azul claro */
+        #main input[type="number"]::-webkit-inner-spin-button,
+        #main input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
         }
 
         #main button {
-            background-color: #2b4c7e; /* Azul escuro para o botão "Consultar" */
+            background-color: #2b4c7e;
             color: #ffffff;
             cursor: pointer;
             transition: background-color 0.3s ease;
@@ -154,14 +179,6 @@
             margin-bottom: 0;
         }
 
-        .filtros-adicionados {
-            margin-top: 10px;
-            padding: 10px;
-            border: 1px solid #cccccc;
-            border-radius: 5px;
-            background-color: #ffffff;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
     </style>
 </head>
 
@@ -173,92 +190,27 @@
             <h2>Consulta de Questões</h2>
             <h3>Escolha os Filtros</h3>
             <form action="/manutencao/consultar-resultados" method="POST">
-                <select id="filtro" name="tipoAvaliacao" onchange="toggleOptions()">
-                    <option value="" disabled selected>Tipo de Filtro</option>
-                    <option value="1">Número da Questão</option>
-                    <option value="2">Texto da questão</option>
-                    <option value="3">Área da Questão</option>
-                    <option value="4">Tipo de Avaliação</option>
-                    <option value="5">Tipo de Questão</option>
+                <input type="number" name="numeroQuestao" placeholder="Informe o número da questão">
+                <select>
+                    <option value="" disabled selected>Tipo de Avaliação</option>
+                    <option value="1">Autoavaliação Institucional</option>
+                    <option value="2">Avaliação de Satisfação</option>
                 </select>
-
-                <select id="operador-logico">
-                    <option value="" disabled selected>Operador Lógico</option>
-                    <option value="1">Igual a</option>
-                    <option value="2">Diferente de</option>
-                    <option value="3">Maior que</option>
-                    <option value="4">Menor que</option>
-                    <option value="5">Contém</option>
-                </select>
-
-                <div class="input-button">
-                    <input type="text" id="form-input--numero-questao" placeholder="Valor do Filtro">
-                    <input type="button" class="button" value="Adicionar Filtro"/>
-                </div>
-
-                <div class="filtros-adicionados">
-                    <h4>Filtros adicionados:</h4>
-
-                </div>
 
                 <button type="submit">Consultar</button>
             </form>
         </div>
     </div>
 </main>
-
 <script>
-    function toggleOptions() {
-        // Função para lidar com a mudança de opções, se necessário
-    }
-
-    document.querySelector('.input-button .button').addEventListener('click', function() {
-        // Obtém os valores dos campos
-        const filtro = document.getElementById('filtro').value;
-        const operadorLogico = document.getElementById('operador-logico').value;
-        const valorFiltro = document.getElementById('form-input--numero-questao').value;
-
-        // Mapeia os valores dos filtros para descrições
-        const filtrosDescricao = {
-            '1': 'Número da Questão',
-            '2': 'Texto da questão',
-            '3': 'Área da Questão',
-            '4': 'Tipo de Avaliação',
-            '5': 'Tipo de Questão'
-        };
-
-        const operadoresDescricao = {
-            '1': 'Igual a',
-            '2': 'Diferente de',
-            '3': 'Maior que',
-            '4': 'Menor que',
-            '5': 'Contém'
-        };
-
-        // Verifica se os campos possuem valores
-        if (filtro && operadorLogico && valorFiltro) {
-            const filtroDescricao = filtrosDescricao[filtro];
-            const operadorDescricao = operadoresDescricao[operadorLogico];
-
-            // Cria a string com o filtro adicionado
-            const filtroAdicionado = `${filtroDescricao} ${operadorDescricao} ${valorFiltro}`;
-
-            // Cria um novo elemento <p> para o filtro adicionado
-            const p = document.createElement('p');
-            p.textContent = filtroAdicionado;
-
-            // Adiciona o novo filtro à lista de filtros adicionados
-            document.querySelector('.filtros-adicionados').appendChild(p);
-
-            // Limpa os campos
-            document.getElementById('filtro').value = '';
-            document.getElementById('operador-logico').value = '';
-            document.getElementById('form-input--numero-questao').value = '';
+    function toggleSubmenu(id) {
+        var submenu = document.getElementById(id);
+        if (submenu.style.display === "block") {
+            submenu.style.display = "none";
         } else {
-            // Exibe um alerta se algum dos campos estiver vazio
-            alert('Preencha todos os campos antes de adicionar o filtro.');
+            submenu.style.display = "block";
         }
-    });
+    }
 </script>
 </body>
 

@@ -15,6 +15,7 @@ body {
     font-size: 16px;
 }
 
+
 body ::placeholder {
     color: #333;
     opacity: 1;
@@ -55,10 +56,46 @@ main {
     padding: 10px;
     border-radius: 5px;
     transition: background-color 0.3s;
+    cursor: pointer;
 }
 
 .menu-lateral a:hover {
     background-color: #567ebb;
+}
+
+#questoes {
+    display: none;
+    margin-left: 20px;
+}
+
+#categorias {
+    display: none;
+    margin-left: 20px;
+}
+
+#respondentes {
+    display: none;
+    margin-left: 20px;
+}
+
+#curso-materia {
+    display: none;
+    margin-left: 20px;
+}
+
+#avaliacoes {
+    display: none;
+    margin-left: 20px;
+}
+
+#autoavaliacao {
+    display: none;
+    margin-left: 20px;
+}
+
+#avaliacao-satisfacao {
+    display: none;
+    margin-left: 20px;
 }
 
 .form-container {

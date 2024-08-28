@@ -13,6 +13,9 @@ public class Questoes {
     @Column(name="CD_QUESTAO")
     private int cdQuestao;
 
+    @Column(name="DS_QUESTAO")
+    private String dsQuestao;
+
     @ManyToOne
     @JoinColumn(name="FK_FLAG_TIPO_AVALIACAO")
     private ItemDominio flagTipoAvaliacao;
@@ -39,6 +42,14 @@ public class Questoes {
 
     public void setCdQuestao(int cdQuestao) {
         this.cdQuestao = cdQuestao;
+    }
+
+    public String getDsQuestao() {
+        return dsQuestao;
+    }
+
+    public void setDsQuestao(String dsQuestao) {
+        this.dsQuestao = dsQuestao;
     }
 
     public ItemDominio getFlagTipoAvaliacao() {

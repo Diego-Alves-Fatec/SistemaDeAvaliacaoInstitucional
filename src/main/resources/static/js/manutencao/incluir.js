@@ -27,6 +27,15 @@ function generateOptions() {
     }
 }
 
+function toggleSubmenu(id) {
+    var submenu = document.getElementById(id);
+    if (submenu.style.display === "block") {
+        submenu.style.display = "none";
+    } else {
+        submenu.style.display = "block";
+    }
+}
+
 // function prepareCheckboxes() {
 //     // Seleciona todos os checkboxes marcados com o nome 'tipoPerfil'
 //     const checkboxes = document.querySelectorAll('input[name="tipoPerfilCheckbox"]:checked');

@@ -91,6 +91,7 @@ public class QuestoesService {
         List<Dominio> dominios = dominioRepository.findAll();
 
         questoes.setCdQuestao(Integer.parseInt(formData.get("numeroQuestao")));
+        questoes.setDsQuestao(formData.get("dsQuestao"));
 
         questoes.setFlagTipoAvaliacao(getTipoAvaliacao(formData, dominios));
         questoes.setFlagCategoriaQuestao(getCategoriaQuestao(formData, dominios));
