@@ -1,0 +1,31 @@
+#num-opcoes {
+    display: none;
+}
+
+.opcao-input {
+    margin-bottom: 15px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.checkbox-group {
+    margin-bottom: 1rem;
+}
+
+.checkbox-group label {
+    text-align: left;
+    margin-bottom: 0.5rem;
+    display: block;
+    font-size: 1rem;
+}
+
+.checkbox-container label {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    font-size: 1rem;
+}
+
+.checkbox-container input[type="checkbox"] {
+    margin-right: 0.5rem;
+}

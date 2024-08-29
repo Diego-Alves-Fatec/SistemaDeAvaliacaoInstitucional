@@ -4,9 +4,11 @@ function toggleOptions() {
 
     if (questionType === '2') {
         additionalOptions.style.display = 'block';
+        document.getElementById("num-opcoes").style.display = 'block';
         generateOptions();
     } else {
         additionalOptions.style.display = 'none';
+        document.getElementById("num-opcoes").style.display = 'none';
         document.getElementById('opcoes-container').innerHTML = '';
     }
 }
@@ -27,14 +29,7 @@ function generateOptions() {
     }
 }
 
-function toggleSubmenu(id) {
-    var submenu = document.getElementById(id);
-    if (submenu.style.display === "block") {
-        submenu.style.display = "none";
-    } else {
-        submenu.style.display = "block";
-    }
-}
+
 
 // function prepareCheckboxes() {
 //     // Seleciona todos os checkboxes marcados com o nome 'tipoPerfil'

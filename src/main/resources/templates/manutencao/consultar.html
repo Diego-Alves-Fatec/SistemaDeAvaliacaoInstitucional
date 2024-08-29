@@ -7,179 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consulta de Questões</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            box-sizing: border-box;
-            font-family: 'Poppins', Arial, sans-serif;
-            color: #333;
-        }
-
-        body {
-            background-color: #ffffff;
-            margin: 0;
-            font-family: 'Poppins', Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            height: auto;
-            overflow: auto;
-        }
-
-        main {
-            height: auto;
-            width: 70%;
-            display: flex;
-            justify-content: center;
-        }
-
-        .menu-lateral {
-            width: 250px;
-            background-color: #2b4c7e;
-            height: 100%;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
-            box-sizing: border-box;
-            overflow-y: auto;
-        }
-
-        .menu-lateral h2 {
-            font-size: 24px;
-            margin: 0 0 20px;
-            color: #ffffff;
-            padding-left: 10px;
-        }
-
-        .menu-lateral a {
-            display: block;
-            text-decoration: none;
-            color: #ffffff;
-            font-size: 18px;
-            margin: 10px 0;
-            padding: 10px;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-
-        .menu-lateral a:hover {
-            background-color: #567ebb;
-        }
-
-        #questoes {
-            display: none;
-            margin-left: 20px;
-        }
-
-        #categorias {
-            display: none;
-            margin-left: 20px;
-        }
-
-        #respondentes {
-            display: none;
-            margin-left: 20px;
-        }
-
-        #curso-materia {
-            display: none;
-            margin-left: 20px;
-        }
-
-        #avaliacoes {
-            display: none;
-            margin-left: 20px;
-        }
-
-        #autoavaliacao {
-            display: none;
-            margin-left: 20px;
-        }
-
-        #avaliacao-satisfacao {
-            display: none;
-            margin-left: 20px;
-        }
-
-        #tipo-avaliacao {
-            display: none;
-        }
-
-        #operador-logico {
-            display: none;
-        }
-
-        .form-container {
-            padding: 0 20px;
-            width: 100%;
-            height: 100vh;
-            overflow-y: scroll;
-        }
-
-        #main {
-            background-color: #f4f7fa;
-            text-align: center;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            width: 100%;
-            margin: 0 auto;
-            box-sizing: border-box;
-        }
-
-        #main h2 {
-            margin: 0 0 15px;
-            font-size: 28px;
-            color: #2b3e50;
-        }
-
-        #main input[type="text"],
-        #main input[type="number"],
-        #main select,
-        #main textarea {
-            margin-bottom: 15px;
-            padding: 12px;
-            font-size: 1rem;
-            border: 1px solid #cccccc;
-            border-radius: 5px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        #main input[type="number"] {
-            appearance: textfield;
-            -moz-appearance: textfield;
-            -webkit-appearance: none;
-        }
-
-        #main input[type="number"]::-webkit-inner-spin-button,
-        #main input[type="number"]::-webkit-outer-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-
-        #main button {
-            background-color: #2b4c7e;
-            color: #ffffff;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            padding: 10px 20px;
-            font-size: 14px;
-            border: none;
-            border-radius: 5px;
-            width: 30%;
-            margin: 12px 0 0 0;
-        }
-
-        #main button:hover {
-            background-color: #567ebb;
-        }
-
-        #main .input-button input[type="text"] {
-            margin-right: 10px;
-            margin-bottom: 0;
-        }
-
-    </style>
+    <link rel="stylesheet" href="/css/manutencao/consultar.css">
+    <link rel="stylesheet" href="/css/fragmentos/menu.css">
+    <link rel="stylesheet" href="/css/fragmentos/base.css">
+    <script src="/js/fragmentos/menu.js"></script>
 </head>
 
 <body>
@@ -189,9 +20,9 @@
         <div id="main">
             <h2>Consulta de Questões</h2>
             <h3>Escolha os Filtros</h3>
-            <form action="/manutencao/consultar-resultados" method="POST">
+            <form action="/manutencao/consultar" method="POST">
                 <input type="number" name="numeroQuestao" placeholder="Informe o número da questão">
-                <select>
+                <select name="tipoAvaliacao">
                     <option value="" disabled selected>Tipo de Avaliação</option>
                     <option value="1">Autoavaliação Institucional</option>
                     <option value="2">Avaliação de Satisfação</option>
@@ -203,14 +34,7 @@
     </div>
 </main>
 <script>
-    function toggleSubmenu(id) {
-        var submenu = document.getElementById(id);
-        if (submenu.style.display === "block") {
-            submenu.style.display = "none";
-        } else {
-            submenu.style.display = "block";
-        }
-    }
+
 </script>
 </body>
 

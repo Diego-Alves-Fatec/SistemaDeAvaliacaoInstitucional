@@ -1,0 +1,118 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Poppins', Arial, sans-serif;
+    color: #333;
+}
+
+body {
+    background-color: #ffffff;
+    margin: 0;
+    font-family: 'Poppins', Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    height: auto;
+    overflow-y: scroll;
+}
+
+main {
+    height: auto;
+    width: 70%;
+    display: flex;
+    justify-content: center;
+}
+
+.form-container {
+    padding: 0 20px;
+    width: 100%;
+    height: 100vh;
+}
+
+#main {
+    background-color: #f4f7fa;
+    text-align: center;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+#main h2 {
+    margin: 0 0 15px;
+    font-size: 28px;
+    color: #2b3e50;
+}
+
+#main input[type="text"],
+#main input[type="number"],
+#main select,
+#main textarea {
+    margin-bottom: 15px;
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#main input[type="number"] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+    -webkit-appearance: none;
+}
+
+#main input[type="number"]::-webkit-inner-spin-button,
+#main input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#main button {
+    background-color: #2b4c7e;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    padding: 10px 20px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    width: 30%;
+    margin: 12px 0 0 0;
+}
+
+#main button:hover {
+    background-color: #567ebb;
+}
+
+#main .input-button input[type="text"] {
+    margin-right: 10px;
+    margin-bottom: 0;
+}
+
+/*
+    Personalizar o Scroll - Cada navegador se comporta de um jeito, entao GPT ajudou bastante nessa
+*/
+
+/* Barra de rolagem */
+::-webkit-scrollbar {
+    width: 12px; /* Largura da barra de rolagem */
+}
+
+/* Trilho da barra de rolagem */
+::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Cor do trilho */
+    border-radius: 10px;
+}
+
+/* Parte rolável da barra de rolagem */
+::-webkit-scrollbar-thumb {
+    background: #888; /* Cor da parte rolável */
+    border-radius: 10px;
+}
+
+/* Parte rolável da barra de rolagem quando está sendo rolada */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}

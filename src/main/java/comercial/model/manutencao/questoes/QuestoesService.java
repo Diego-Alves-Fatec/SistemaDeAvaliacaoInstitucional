@@ -11,9 +11,8 @@ import comercial.model.manutencao.questoes.questoes_multiplaescolha.QuestoesMult
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class QuestoesService {
@@ -173,13 +172,22 @@ public class QuestoesService {
             int tipoAvaliacao = Integer.parseInt(formData.get("tipoAvaliacao"));
             int categoriaQuestao = Integer.parseInt(formData.get("categoriaQuestao"));
             int tipoQuestao = Integer.parseInt(formData.get("tipoQuestao"));
-//            if(!formData.get("flagsValores").isBlank()) {
-//                int flagsValores = Integer.parseInt(formData.get("flagsValores"));
-//            }
 
         } catch (NumberFormatException e) {
             throw new RuntimeException("Ocorreu um erro nos valores fornecidos pelo formulário");
         }
 
     }
+
+    public Questoes consultar(Map<String, String> formData) {
+        List<Dominio> dominios = dominioRepository.findAll();
+
+        ItemDominio tipoAvaliacao = getTipoAvaliacao(formData, dominios);
+
+        Integer numeroQuestao = Integer.parseInt(formData.get("numeroQuestao"));
+
+        return questoesDAO.consultar(numeroQuestao,tipoAvaliacao);
+
+    }
+
 }

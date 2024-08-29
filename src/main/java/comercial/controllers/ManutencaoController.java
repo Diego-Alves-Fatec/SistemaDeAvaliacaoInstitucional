@@ -39,9 +39,16 @@ public class ManutencaoController extends BaseController {
         return "redirect:/manutencao/exibirIncluir";
     }
 
-    @GetMapping("/consultar")
-    public String consultar() {
+    @GetMapping("/exibirConsultar")
+    public String exibirConsultar() {
         return "manutencao/consultar";
+    }
+
+    @PostMapping("/consultar")
+    public String consultar(@ModelAttribute("formData") Map<String, String> formData, Model model) {
+        Questoes questoes = questoesService.consultar(formData);
+        model.addAttribute("questoes", questoes);
+        return "manutencao/consultar_resultados";
     }
 
     @GetMapping("/alterar")
@@ -54,8 +61,4 @@ public class ManutencaoController extends BaseController {
         return "manutencao/excluir";
     }
 
-    @PostMapping("/consultar-resultados")
-    public String consultarResultados() {
-        return "manutencao/consultar-resultados";
-    }
 }

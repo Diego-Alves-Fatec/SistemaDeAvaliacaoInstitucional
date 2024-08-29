@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Questões</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/manutencao/incluir_style.css">
+    <link rel="stylesheet" href="/css/manutencao/incluir.css">
+    <link rel="stylesheet" href="/css/fragmentos/menu.css">
+    <link rel="stylesheet" href="/css/fragmentos/base.css">
+    <script src="/js/fragmentos/menu.js"></script>
 </head>
 
 <body>
@@ -17,57 +19,50 @@
         <div id="main">
             <h2>Incluir de Questões</h2>
             <form action="/manutencao/incluir" method="POST">
+
                 <input type="number" name="numeroQuestao" placeholder="Informe o número da questão">
+
                 <textarea name="dsQuestao" placeholder="Informe a questão" required rows="4"></textarea>
+
                 <select id="tipoAvaliacao" name="tipoAvaliacao">
                     <option value="" disabled selected>Tipo de Avaliação</option>
                     <option th:each="item : ${formData['tipoAvaliacao']}"
                             th:value="${item.cdDominio}"
-                            th:text="${item.dsItemDominio}">Tipo de Avaliação</option>
+                            th:text="${item.dsItemDominio}">Tipo de Avaliação
+                    </option>
                 </select>
 
                 <select id="categoriaQuestao" name="categoriaQuestao">
                     <option value="" disabled selected>Categoria da Questão</option>
                     <option th:each="item : ${formData['categoriaQuestao']}"
                             th:value="${item.cdDominio}"
-                            th:text="${item.dsItemDominio}">Categoria Questão</option>
+                            th:text="${item.dsItemDominio}">Categoria Questão
+                    </option>
                 </select>
-
-<!--                <div class="checkbox-group">-->
-<!--                    <label>Perfis Respondentes:</label>-->
-<!--                    <div class="checkbox-container">-->
-<!--                        <div th:each="item : ${formData['tipoPerfil']}">-->
-<!--                            <label>-->
-<!--                                <input type="checkbox" name="tipoPerfilCheckbox" th:value="${item.cdDominio}" />-->
-<!--                                <span th:text="${item.dsItemDominio}"></span>-->
-<!--                            </label>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <input type="hidden" id="tipoPerfil" name="tipoPerfil">-->
-
 
                 <select id="tipoQuestao" name="tipoQuestao" onchange="toggleOptions()">
                     <option value="" disabled selected>Tipo de Questão</option>
                     <option th:each="item : ${formData['tipoQuestao']}"
                             th:value="${item.cdDominio}"
-                            th:text="${item.dsItemDominio}">Tipo Questão</option>
+                            th:text="${item.dsItemDominio}">Tipo Questão
+                    </option>
                 </select>
 
-                <div id="opcoes-adicionais" name="flagsValores">
+                <div id="opcoes-adicionais">
                     <input type="number" id="num-opcoes" placeholder="Número de opções" min="4" max="10"
                            oninput="generateOptions()">
                     <div id="opcoes-container"></div>
                 </div>
 
-<!--                <button type="submit" onclick="prepareCheckboxes()">Cadastrar</button>-->
                 <button type="submit">Cadastrar</button>
+
             </form>
         </div>
     </div>
 </main>
 
 <script src="/js/manutencao/incluir.js"></script>
+
 </body>
 
 </html>

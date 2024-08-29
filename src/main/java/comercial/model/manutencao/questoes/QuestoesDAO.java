@@ -1,14 +1,11 @@
 package comercial.model.manutencao.questoes;
 
-import comercial.model.dominio.Dominio;
-import comercial.model.dominio.DominioRepository;
 import comercial.model.manutencao.item_dominio.ItemDominio;
 import comercial.model.manutencao.item_dominio.ItemDominioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public class QuestoesDAO {
@@ -37,5 +34,9 @@ public class QuestoesDAO {
 
     public void incluirQuestao(Questoes questoes) {
         questoesRepository.save(questoes);
+    }
+
+    public Questoes consultar(int numeroQuestao, ItemDominio tipoAvaliacao) {
+        return questoesRepository.findQuestoesByCdQuestaoAndFlagTipoAvaliacao(numeroQuestao, tipoAvaliacao);
     }
 }
