@@ -126,6 +126,14 @@ public class QuestoesService {
                 .orElse(null);
     }
 
+    private ItemDominio getTipoQuestao(Questoes questoes, List<Dominio> dominios) {
+        return getTiposQuestao(dominios)
+                .stream()
+                .filter(item -> item.getCdDominio() == questoes.getFlagTipoQuestao().getCdDominio())
+                .findFirst()
+                .orElse(null);
+    }
+
     private List<ItemDominio> getTiposQuestao(List<Dominio> dominios) {
         return itemDominioDAO.carregarItemDominioPorCd(dominios
                 .stream()
@@ -184,10 +192,26 @@ public class QuestoesService {
 
         ItemDominio tipoAvaliacao = getTipoAvaliacao(formData, dominios);
 
-        Integer numeroQuestao = Integer.parseInt(formData.get("numeroQuestao"));
+        int numeroQuestao = Integer.parseInt(formData.get("numeroQuestao"));
 
-        return questoesDAO.consultar(numeroQuestao,tipoAvaliacao);
+        Questoes questoes = questoesDAO.consultar(numeroQuestao,tipoAvaliacao);
 
+        ItemDominio tipoQuestao = getTipoQuestao(questoes, dominios);
+
+        if(questoes != null) {
+            if(questoes.getFlagTipoQuestao().getCdDominio() == 1) {
+                formData.put("multiplaEscolha","false");
+            } else if(questoes.getFlagTipoQuestao().getCdDominio() == 2) {
+                formData.put("multiplaEscolha","true");
+            }
+        }
+
+        return questoes;
+
+    }
+
+    public QuestoesMultiplaEscolha consultarQuestoesMultiplaEscolha(int id) {
+        return questoesMultiplaEscolhaDAO.consultarQuestaoMultiplaEscolha(id);
     }
 
 }

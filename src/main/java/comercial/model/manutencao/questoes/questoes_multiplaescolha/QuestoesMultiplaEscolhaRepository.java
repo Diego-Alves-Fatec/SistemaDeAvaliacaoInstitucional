@@ -5,4 +5,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface QuestoesMultiplaEscolhaRepository extends JpaRepository<QuestoesMultiplaEscolha, Integer> {
+    QuestoesMultiplaEscolha findById(int id);
+
 }

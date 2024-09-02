@@ -12,4 +12,8 @@ public class QuestoesMultiplaEscolhaDAO {
     public void incluir(QuestoesMultiplaEscolha dto) {
         questoesMultiplaEscolhaRepository.save(dto);
     }
+
+    public QuestoesMultiplaEscolha consultarQuestaoMultiplaEscolha(int questoesID) {
+        return questoesMultiplaEscolhaRepository.findById(questoesID);
+    }
 }

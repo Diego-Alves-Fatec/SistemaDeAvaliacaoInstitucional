@@ -1,0 +1,3 @@
+function carregarQuestao() {
+    document.getElementById()
+}

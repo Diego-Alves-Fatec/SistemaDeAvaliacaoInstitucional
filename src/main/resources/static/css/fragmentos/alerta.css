@@ -1,0 +1,28 @@
+.alert {
+    display: none;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #ffffff;
+    color: red;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    width: 300px;
+    box-sizing: border-box;
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.alert.visible {
+    display: block;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.alert.hidden {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}

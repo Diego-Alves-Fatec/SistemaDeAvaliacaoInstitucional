@@ -2,6 +2,10 @@
     display: none;
 }
 
+#tipoDeBotao {
+    display: none;
+}
+
 .opcao-input {
     margin-bottom: 15px;
     width: 100%;
