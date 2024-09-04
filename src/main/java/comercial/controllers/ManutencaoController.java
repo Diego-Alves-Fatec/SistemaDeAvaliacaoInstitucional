@@ -1,5 +1,6 @@
 package comercial.controllers;
 
+import ch.qos.logback.core.util.StringUtil;
 import comercial.Utilitarios.BaseController;
 import comercial.Utilitarios.DominioTipoOperacao;
 import comercial.model.manutencao.item_dominio.ItemDominio;
@@ -7,6 +8,8 @@ import comercial.model.manutencao.questoes.Questoes;
 import comercial.model.manutencao.questoes.QuestoesService;
 import comercial.model.manutencao.questoes.questoes_multiplaescolha.QuestoesMultiplaEscolha;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +28,7 @@ public class ManutencaoController extends BaseController {
     @GetMapping("/exibirIncluir")
     public String exibirIncluir(Model model) {
 
-        Map<String,?> formData = new HashMap<>();
+        Map<String, ?> formData = new HashMap<>();
         questoesService.carregarCombo(formData);
         model.addAttribute("formData", formData);
         return "manutencao/incluir";
@@ -45,13 +48,13 @@ public class ManutencaoController extends BaseController {
     @PostMapping("/consultar")
     public String consultar(@ModelAttribute("formData") Map<String, String> formData, Model model) {
         try {
-        Questoes questoes = questoesService.consultar(formData);
-        model.addAttribute("questoes", questoes);
-        if(formData.get("multiplaEscolha").equals("true")) {
-            model.addAttribute("multiplaEscolha", true);
-            QuestoesMultiplaEscolha questoesMultiplaEscolha = questoesService.consultarQuestoesMultiplaEscolha(questoes.getId());
-            model.addAttribute("questoesMultiplaEscolha",questoesMultiplaEscolha);
-        }
+            Questoes questoes = questoesService.consultar(formData);
+            model.addAttribute("questoes", questoes);
+            if (formData.get("multiplaEscolha").equals("true")) {
+                model.addAttribute("multiplaEscolha", true);
+                List<String> respostas = questoesService.consultarQuestoesMultiplaEscolha(questoes);
+                model.addAttribute("respostas", respostas);
+            }
 
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
@@ -62,7 +65,7 @@ public class ManutencaoController extends BaseController {
     @GetMapping("/exibirAlterar")
     public String exibirAlterar(Model model) {
 
-        Map<String,?> formData = new HashMap<>();
+        Map<String, ?> formData = new HashMap<>();
         questoesService.carregarCombo(formData);
         model.addAttribute("formData", formData);
         return "manutencao/alterar";
@@ -76,6 +79,35 @@ public class ManutencaoController extends BaseController {
     @GetMapping("/excluir")
     public String excluir() {
         return "manutencao/excluir";
+    }
+
+    @PostMapping("/carregar")
+    public ResponseEntity<?> carregar(@RequestBody Map<String, String> formData, Model model) {
+        try {
+            if (formData.containsKey("tipoAvaliacao") && formData.containsKey("numeroQuestao") &&
+                    !StringUtil.isNullOrEmpty(formData.get("tipoAvaliacao")) &&
+                    !StringUtil.isNullOrEmpty(formData.get("numeroQuestao"))) {
+
+                Questoes questao = questoesService.consultar(formData);
+                model.addAttribute("questao", questao);
+                if (formData.get("multiplaEscolha").equals("true")) {
+                    List<String> respostas = questoesService.consultarQuestoesMultiplaEscolha(questao);
+                    model.addAttribute("respostas", respostas);
+
+                }
+                model.addAttribute(formData);
+                return ResponseEntity.ok(formData);
+            } else {
+                return ResponseEntity.ok("Campos obrigatórios não preenchidos.");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/construcao")
+    public String construcao() {
+        return "manutencao/construcao";
     }
 
 }

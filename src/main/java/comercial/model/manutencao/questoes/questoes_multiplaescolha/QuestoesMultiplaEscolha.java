@@ -16,40 +16,42 @@ public class QuestoesMultiplaEscolha {
     private Questoes questoes;
 
     @Column(name="FLAG_1")
-    private String flag1;
+    private String resposta1;
 
     @Column(name="FLAG_2")
-    private String flag2;
+    private String resposta2;
 
     @Column(name="FLAG_3")
-    private String flag3;
+    @Nullable
+    private String resposta3;
 
     @Column(name="FLAG_4")
-    private String flag4;
+    @Nullable
+    private String resposta4;
 
     @Column(name="FLAG_5")
     @Nullable
-    private String flag5;
+    private String resposta5;
 
     @Column(name="FLAG_6")
     @Nullable
-    private String flag6;
+    private String resposta6;
 
     @Column(name="FLAG_7")
     @Nullable
-    private String flag7;
+    private String resposta7;
 
     @Column(name="FLAG_8")
     @Nullable
-    private String flag8;
+    private String resposta8;
 
     @Column(name="FLAG_9")
     @Nullable
-    private String flag9;
+    private String resposta9;
 
     @Column(name="FLAG_10")
     @Nullable
-    private String flag10;
+    private String resposta10;
 
     public int getId() {
         return id;
@@ -67,83 +69,89 @@ public class QuestoesMultiplaEscolha {
         this.questoes = questoes;
     }
 
-    public String getFlag1() {
-        return flag1;
+    public String getResposta1() {
+        return resposta1;
     }
 
-    public void setFlag1(String flag1) {
-        this.flag1 = flag1;
+    public void setResposta1(String resposta1) {
+        this.resposta1 = resposta1;
     }
 
-    public String getFlag2() {
-        return flag2;
+    public String getResposta2() {
+        return resposta2;
     }
 
-    public void setFlag2(String flag2) {
-        this.flag2 = flag2;
+    public void setResposta2(String resposta2) {
+        this.resposta2 = resposta2;
     }
 
-    public String getFlag3() {
-        return flag3;
+    public String getResposta3() {
+        return resposta3;
     }
 
-    public void setFlag3(String flag3) {
-        this.flag3 = flag3;
+    public void setResposta3(String resposta3) {
+        this.resposta3 = resposta3;
     }
 
-    public String getFlag4() {
-        return flag4;
+    public String getResposta4() {
+        return resposta4;
     }
 
-    public void setFlag4(String flag4) {
-        this.flag4 = flag4;
+    public void setResposta4(String resposta4) {
+        this.resposta4 = resposta4;
     }
 
-    public String getFlag5() {
-        return flag5;
+    @Nullable
+    public String getResposta5() {
+        return resposta5;
     }
 
-    public void setFlag5(String flag5) {
-        this.flag5 = flag5;
+    public void setResposta5(@Nullable String resposta5) {
+        this.resposta5 = resposta5;
     }
 
-    public String getFlag6() {
-        return flag6;
+    @Nullable
+    public String getResposta6() {
+        return resposta6;
     }
 
-    public void setFlag6(String flag6) {
-        this.flag6 = flag6;
+    public void setResposta6(@Nullable String resposta6) {
+        this.resposta6 = resposta6;
     }
 
-    public String getFlag7() {
-        return flag7;
+    @Nullable
+    public String getResposta7() {
+        return resposta7;
     }
 
-    public void setFlag7(String flag7) {
-        this.flag7 = flag7;
+    public void setResposta7(@Nullable String resposta7) {
+        this.resposta7 = resposta7;
     }
 
-    public String getFlag8() {
-        return flag8;
+    @Nullable
+    public String getResposta8() {
+        return resposta8;
     }
 
-    public void setFlag8(String flag8) {
-        this.flag8 = flag8;
+    public void setResposta8(@Nullable String resposta8) {
+        this.resposta8 = resposta8;
     }
 
-    public String getFlag9() {
-        return flag9;
+    @Nullable
+    public String getResposta9() {
+        return resposta9;
     }
 
-    public void setFlag9(String flag9) {
-        this.flag9 = flag9;
+    public void setResposta9(@Nullable String resposta9) {
+        this.resposta9 = resposta9;
     }
 
-    public String getFlag10() {
-        return flag10;
+    @Nullable
+    public String getResposta10() {
+        return resposta10;
     }
 
-    public void setFlag10(String flag10) {
-        this.flag10 = flag10;
+    public void setResposta10(@Nullable String resposta10) {
+        this.resposta10 = resposta10;
     }
 }

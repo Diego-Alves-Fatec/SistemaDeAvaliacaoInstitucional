@@ -7,12 +7,13 @@ import comercial.model.manutencao.item_dominio.ItemDominio;
 import comercial.model.manutencao.item_dominio.ItemDominioDAO;
 import comercial.model.manutencao.questoes.questoes_multiplaescolha.QuestoesMultiplaEscolha;
 import comercial.model.manutencao.questoes.questoes_multiplaescolha.QuestoesMultiplaEscolhaDAO;
-import comercial.model.manutencao.questoes.questoes_multiplaescolha.QuestoesMultiplaEscolhaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Method;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 public class QuestoesService {
@@ -104,16 +105,16 @@ public class QuestoesService {
 
         dto.setQuestoes(questoes);
 
-        dto.setFlag1(formData.get("flag1"));
-        dto.setFlag2(formData.get("flag2"));
-        dto.setFlag3(formData.get("flag3"));
-        dto.setFlag4(formData.get("flag4"));
-        dto.setFlag5(formData.get("flag5"));
-        dto.setFlag6(formData.get("flag6"));
-        dto.setFlag7(formData.get("flag7"));
-        dto.setFlag8(formData.get("flag8"));
-        dto.setFlag9(formData.get("flag9"));
-        dto.setFlag10(formData.get("flag10"));
+        dto.setResposta1(formData.get("resposta1"));
+        dto.setResposta2(formData.get("resposta2"));
+        dto.setResposta3(formData.get("resposta3"));
+        dto.setResposta4(formData.get("resposta4"));
+        dto.setResposta5(formData.get("resposta5"));
+        dto.setResposta6(formData.get("resposta6"));
+        dto.setResposta7(formData.get("resposta7"));
+        dto.setResposta8(formData.get("resposta8"));
+        dto.setResposta9(formData.get("resposta9"));
+        dto.setResposta10(formData.get("resposta10"));
 
         questoesMultiplaEscolhaDAO.incluir(dto);
     }
@@ -210,8 +211,24 @@ public class QuestoesService {
 
     }
 
-    public QuestoesMultiplaEscolha consultarQuestoesMultiplaEscolha(int id) {
-        return questoesMultiplaEscolhaDAO.consultarQuestaoMultiplaEscolha(id);
+    public List<String> consultarQuestoesMultiplaEscolha(Questoes questoes) {
+        return extrairFlags(questoesMultiplaEscolhaDAO.consultarQuestaoMultiplaEscolha(questoes));
     }
+
+    public List<String> extrairFlags(QuestoesMultiplaEscolha questoesMultiplaEscolha) {
+        return IntStream.rangeClosed(1, 10)
+                .mapToObj(i -> "getResposta" + i)
+                .map(methodName -> {
+                    try {
+                        Method method = questoesMultiplaEscolha.getClass().getMethod(methodName);
+                        return (String) method.invoke(questoesMultiplaEscolha);
+                    } catch (Exception e) {
+                        throw new RuntimeException("Erro ao extrair resposta: " + methodName, e);
+                    }
+                })
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+    }
+
 
 }

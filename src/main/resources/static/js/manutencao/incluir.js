@@ -32,7 +32,7 @@ function gerarOpcoes() {
             input.type = 'text';
             input.className = 'opcao-input';
             input.placeholder = `Opção ${i + 1}`;
-            input.name = `flag${i + 1}`;
+            input.name = `resposta${i + 1}`;
             opcoesContainer.appendChild(input);
         }
     }

@@ -29,32 +29,14 @@
                         <p th:text="'Tipo de Questão: ' + ${questoes.flagTipoQuestao.dsItemDominio}"></p>
                     </div>
 
-                    <div class="questao-flags" th:if="${multiplaEscolha}">
+                    <div class="questao-respostas" th:if="${multiplaEscolha}">
                         <h4>Alternativas:</h4>
                         <ul>
-                            <li th:if="${questoesMultiplaEscolha.getFlag1() != null}"
-                                th:text="${questoesMultiplaEscolha.getFlag1()}"></li>
-                            <li th:if="${questoesMultiplaEscolha.getFlag2() != null}"
-                                th:text="${questoesMultiplaEscolha.getFlag2()}"></li>
-                            <li th:if="${questoesMultiplaEscolha.getFlag3() != null}"
-                                th:text="${questoesMultiplaEscolha.getFlag3()}"></li>
-                            <li th:if="${questoesMultiplaEscolha.getFlag4() != null}"
-                                th:text="${questoesMultiplaEscolha.getFlag4()}"></li>
-                            <li th:if="${questoesMultiplaEscolha.getFlag5() != null}"
-                                th:text="${questoesMultiplaEscolha.getFlag5()}"></li>
-                            <li th:if="${questoesMultiplaEscolha.getFlag6() != null}"
-                                th:text="${questoesMultiplaEscolha.getFlag6()}"></li>
-                            <li th:if="${questoesMultiplaEscolha.getFlag7() != null}"
-                                th:text="${questoesMultiplaEscolha.getFlag7()}"></li>
-                            <li th:if="${questoesMultiplaEscolha.getFlag8() != null}"
-                                th:text="${questoesMultiplaEscolha.getFlag8()}"></li>
-                            <li th:if="${questoesMultiplaEscolha.getFlag9() != null}"
-                                th:text="${questoesMultiplaEscolha.getFlag9()}"></li>
-                            <li th:if="${questoesMultiplaEscolha.getFlag10() != null}"
-                                th:text="${questoesMultiplaEscolha.getFlag10()}"></li>
+                            <li th:each="resposta : ${respostas}">
+                                <span th:text="${resposta}"></span>
+                            </li>
                         </ul>
                     </div>
-
                 </div>
 
                 <div th:if="${error}">

@@ -24,31 +24,34 @@
             <h2>Alterar Questão</h2>
             <form action="/manutencao/incluir" method="POST">
 
-                <input type="number" name="numeroQuestao" placeholder="Informe o número da questão" onblur="carregarQuestao()">
+                <input type="number" id="numeroQuestao" name="numeroQuestao" placeholder="Informe o número da questão" onblur="carregarQuestao()">
 
-                <textarea name="dsQuestao" id="dsQuestao" class="hidden" placeholder="Informe a questão" required rows="4"></textarea>
+                <textarea name="dsQuestao" id="dsQuestao"  placeholder="Informe a questão" required rows="4"
+                          >Conteúdo</textarea>
 
-                <select id="tipoAvaliacao" name="tipoAvaliacao">
+
+                <select id="tipoAvaliacao" name="tipoAvaliacao" onblur="carregarQuestao()">
                     <option value="" disabled selected>Tipo de Avaliação</option>
                     <option th:each="item : ${formData['tipoAvaliacao']}"
                             th:value="${item.cdDominio}"
-                            th:text="${item.dsItemDominio}">Tipo de Avaliação
+                            th:text="${item.dsItemDominio}"
+                            th:selected="${questao != null && questao.flagTipoAvaliacao.cdDominio == item.cdDominio}">
                     </option>
                 </select>
 
                 <select id="categoriaQuestao" class="hidden" name="categoriaQuestao">
-                    <option value="" disabled selected>Categoria da Questão</option>
                     <option th:each="item : ${formData['categoriaQuestao']}"
                             th:value="${item.cdDominio}"
-                            th:text="${item.dsItemDominio}">Categoria Questão
+                            th:text="${item.dsItemDominio}"
+                            th:selected="${questao != null && questao.flagCategoriaQuestao.cdDominio == item.cdDominio}">
                     </option>
                 </select>
 
                 <select id="tipoQuestao" class="hidden" name="tipoQuestao" onchange="toggleOpcoes()">
-                    <option value="" disabled selected>Tipo de Questão</option>
                     <option th:each="item : ${formData['tipoQuestao']}"
                             th:value="${item.cdDominio}"
-                            th:text="${item.dsItemDominio}">Tipo Questão
+                            th:text="${item.dsItemDominio}"
+                            th:selected="${questao != null && questao.flagTipoQuestao.cdDominio == item.cdDominio}">
                     </option>
                 </select>
 
@@ -69,6 +72,7 @@
         </div>
     </div>
 </main>
+
 
 </body>
 
