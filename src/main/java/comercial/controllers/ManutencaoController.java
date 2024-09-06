@@ -92,10 +92,10 @@ public class ManutencaoController extends BaseController {
                     List<String> respostas = questoesService.consultarQuestoesMultiplaEscolha(questao);
                     model.addAttribute("respostas", respostas);
                 }
-                formData.put("dsQuestao", questao.getDsQuestao());
-                formData.put("categoriaQuestao", String.valueOf(questao.getFlagCategoriaQuestao().getCdDominio()));
-                formData.put("tipoQuestao", String.valueOf(questao.getFlagTipoQuestao().getCdDominio()));
-                formData.put("tipoAvaliacao", String.valueOf(questao.getFlagTipoAvaliacao().getCdDominio()));
+                formData.put("questao-dsQuestao", questao.getDsQuestao());
+                formData.put("questao-categoriaQuestao", String.valueOf(questao.getFlagCategoriaQuestao().getCdDominio()));
+                formData.put("questao-tipoQuestao", String.valueOf(questao.getFlagTipoQuestao().getCdDominio()));
+                formData.put("questao-tipoAvaliacao", String.valueOf(questao.getFlagTipoAvaliacao().getCdDominio()));
 
                 questoesService.carregarCombo(formData);
                 return ResponseEntity.ok(formData);

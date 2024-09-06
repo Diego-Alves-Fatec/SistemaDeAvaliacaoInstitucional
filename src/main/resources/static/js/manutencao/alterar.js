@@ -81,33 +81,31 @@ function carregaDados(data) {
     document.getElementById("categoriaQuestao").classList.remove('hidden');
     document.getElementById("tipoQuestao").classList.remove('hidden');
     document.getElementById("dsQuestao").classList.remove('hidden');
-    document.getElementById("dsQuestao").innerHTML = data.dsQuestao;
     document.getElementById("numeroQuestao").disabled = true;
     document.getElementById("tipoAvaliacao").disabled = true;
 
-    function selecionarOpcao() {
+    document.getElementById("dsQuestao").innerHTML = data['questao-dsQuestao'];
+    let questao = ["categoriaQuestao","tipoQuestao","tipoAvaliacao"];
 
-        var questao = {
-            flagTipoAvaliacao: {
-                cdDominio: 7
-            }
-        };
+    selecionarOpcao(questao[0],data);
+    selecionarOpcao(questao[1],data);
+    selecionarOpcao(questao[2],data);
+    toggleOpcoes();
 
-        var selectElement = document.getElementById('categoriaQuestao');
-        var valorSelecionado = questao.flagTipoAvaliacao.cdDominio;
+}
 
-        for (var i = 0; i < selectElement.options.length; i++) {
-            var option = selectElement.options[i];
-            if (parseInt(option.value) === valorSelecionado) {
-                option.selected = true;
-                break;
-            }
+function selecionarOpcao(questao,data) {
+
+    let selectElement = document.getElementById(questao);
+    let valorSelecionado = data["questao-" + questao];
+
+    for (var i = 0; i < selectElement.options.length; i++) {
+        var option = selectElement.options[i];
+        if (option.value === valorSelecionado) {
+            option.selected = true;
+            break;
         }
     }
-
-    selecionarOpcao();
-
-
 }
 
 function disparaErroAjax() {
