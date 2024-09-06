@@ -62,6 +62,7 @@ public class ManutencaoController extends BaseController {
         return "manutencao/consultar_resultados";
     }
 
+
     @GetMapping("/exibirAlterar")
     public String exibirAlterar(Model model) {
 
@@ -84,18 +85,19 @@ public class ManutencaoController extends BaseController {
     @PostMapping("/carregar")
     public ResponseEntity<?> carregar(@RequestBody Map<String, String> formData, Model model) {
         try {
-            if (formData.containsKey("tipoAvaliacao") && formData.containsKey("numeroQuestao") &&
-                    !StringUtil.isNullOrEmpty(formData.get("tipoAvaliacao")) &&
-                    !StringUtil.isNullOrEmpty(formData.get("numeroQuestao"))) {
-
+            if (questoesService.validaCarregar(formData)) {
                 Questoes questao = questoesService.consultar(formData);
                 model.addAttribute("questao", questao);
                 if (formData.get("multiplaEscolha").equals("true")) {
                     List<String> respostas = questoesService.consultarQuestoesMultiplaEscolha(questao);
                     model.addAttribute("respostas", respostas);
-
                 }
-                model.addAttribute(formData);
+                formData.put("dsQuestao", questao.getDsQuestao());
+                formData.put("categoriaQuestao", String.valueOf(questao.getFlagCategoriaQuestao().getCdDominio()));
+                formData.put("tipoQuestao", String.valueOf(questao.getFlagTipoQuestao().getCdDominio()));
+                formData.put("tipoAvaliacao", String.valueOf(questao.getFlagTipoAvaliacao().getCdDominio()));
+
+                questoesService.carregarCombo(formData);
                 return ResponseEntity.ok(formData);
             } else {
                 return ResponseEntity.ok("Campos obrigatórios não preenchidos.");

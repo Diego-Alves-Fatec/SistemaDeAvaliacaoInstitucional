@@ -59,23 +59,64 @@ function carregarQuestao() {
     const numeroQuestao = document.getElementById("numeroQuestao").value;
     const tipoAvaliacao = document.getElementById("tipoAvaliacao").value;
 
+    if (numeroQuestao != null && numeroQuestao !== '' && tipoAvaliacao !== null && tipoAvaliacao !== '') {
+        const dados = {numeroQuestao, tipoAvaliacao};
 
-    const dados = { numeroQuestao, tipoAvaliacao };
-
-    fetch('/manutencao/carregar', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(dados),
-    })
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById("dsQuestao").classList.remove('hidden');
-            document.getElementById("categoriaQuestao").classList.remove('hidden');
-            document.getElementById("tipoQuestao").classList.remove('hidden');
+        fetch('/manutencao/carregar', {
+            method: 'POST', headers: {
+                'Content-Type': 'application/json',
+            }, body: JSON.stringify(dados),
         })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
+            .then(response => response.json())
+            .then(data => {
+                carregaDados(data);
+            })
+            .catch((error) => {
+                disparaErroAjax();
+            });
+    }
 }
+
+function carregaDados(data) {
+    document.getElementById("categoriaQuestao").classList.remove('hidden');
+    document.getElementById("tipoQuestao").classList.remove('hidden');
+    document.getElementById("dsQuestao").classList.remove('hidden');
+    document.getElementById("dsQuestao").innerHTML = data.dsQuestao;
+    document.getElementById("numeroQuestao").disabled = true;
+    document.getElementById("tipoAvaliacao").disabled = true;
+
+    function selecionarOpcao() {
+
+        var questao = {
+            flagTipoAvaliacao: {
+                cdDominio: 7
+            }
+        };
+
+        var selectElement = document.getElementById('categoriaQuestao');
+        var valorSelecionado = questao.flagTipoAvaliacao.cdDominio;
+
+        for (var i = 0; i < selectElement.options.length; i++) {
+            var option = selectElement.options[i];
+            if (parseInt(option.value) === valorSelecionado) {
+                option.selected = true;
+                break;
+            }
+        }
+    }
+
+    selecionarOpcao();
+
+
+}
+
+function disparaErroAjax() {
+    document.getElementById("numeroQuestao").classList.add('hidden');
+    document.getElementById("tipoAvaliacao").classList.add('hidden');
+    document.getElementById("erro").classList.remove('hidden');
+    let form = document.getElementById("formulario");
+    form.action = '/manutencao/exibirAlterar'
+    form.method = 'GET';
+    document.getElementById("botao-form").innerHTML = 'Voltar'
+}
+

@@ -22,13 +22,10 @@
     <div class="form-container">
         <div id="main">
             <h2>Alterar Questão</h2>
-            <form action="/manutencao/incluir" method="POST">
+            <form action="/manutencao/incluir" id="formulario" method="POST">
 
-                <input type="number" id="numeroQuestao" name="numeroQuestao" placeholder="Informe o número da questão" onblur="carregarQuestao()">
-
-                <textarea name="dsQuestao" id="dsQuestao"  placeholder="Informe a questão" required rows="4"
-                          >Conteúdo</textarea>
-
+                <input type="number" id="numeroQuestao" name="numeroQuestao" placeholder="Informe o número da questão"
+                       onblur="carregarQuestao()">
 
                 <select id="tipoAvaliacao" name="tipoAvaliacao" onblur="carregarQuestao()">
                     <option value="" disabled selected>Tipo de Avaliação</option>
@@ -39,11 +36,15 @@
                     </option>
                 </select>
 
+                <textarea name="dsQuestao" id="dsQuestao" class="hidden" placeholder="Informe a questão" required
+                          rows="4">
+                </textarea>
+
                 <select id="categoriaQuestao" class="hidden" name="categoriaQuestao">
                     <option th:each="item : ${formData['categoriaQuestao']}"
                             th:value="${item.cdDominio}"
-                            th:text="${item.dsItemDominio}"
-                            th:selected="${questao != null && questao.flagCategoriaQuestao.cdDominio == item.cdDominio}">
+                            th:text="${item.dsItemDominio}">
+
                     </option>
                 </select>
 
@@ -66,7 +67,11 @@
                     <div id="opcoes-container"></div>
                 </div>
 
-                <button type="submit">Alterar</button>
+                <div class="hidden" id="erro">
+                    <p>Não foram encontrados resultados.</p>
+                </div>
+
+                <button type="submit" id="botao-form">Alterar</button>
 
             </form>
         </div>

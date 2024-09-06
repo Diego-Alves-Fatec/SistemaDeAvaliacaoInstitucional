@@ -1,5 +1,6 @@
 package comercial.model.manutencao.questoes;
 
+import ch.qos.logback.core.util.StringUtil;
 import comercial.Utilitarios.DominioConstantesCombos;
 import comercial.model.dominio.Dominio;
 import comercial.model.dominio.DominioRepository;
@@ -231,4 +232,9 @@ public class QuestoesService {
     }
 
 
+    public boolean validaCarregar(Map<String, String> formData) {
+        return formData.containsKey("tipoAvaliacao") && formData.containsKey("numeroQuestao") &&
+                !StringUtil.isNullOrEmpty(formData.get("tipoAvaliacao")) &&
+                !StringUtil.isNullOrEmpty(formData.get("numeroQuestao"));
+    }
 }
