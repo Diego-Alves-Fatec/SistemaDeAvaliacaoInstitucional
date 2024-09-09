@@ -16,28 +16,36 @@ function toggleOpcoes() {
 }
 
 function gerarOpcoes() {
-
-    let numOpcoes = document.getElementById('num-opcoes').value
+    let numOpcoes = parseInt(document.getElementById('num-opcoes').value);
 
     if ((numOpcoes < 2 || numOpcoes > 10) && (numOpcoes !== '' && numOpcoes != null)) {
         dispararAlerta();
     } else {
-        const numOpcoes = Math.max(2, Math.min(10, parseInt(document.getElementById('num-opcoes').value) || 0));
         const opcoesContainer = document.getElementById('opcoes-container');
+        const inputsExistentes = opcoesContainer.querySelectorAll('.opcao-input').length;
 
-        opcoesContainer.innerHTML = '';
+        if (numOpcoes > inputsExistentes) {
+            for (let i = inputsExistentes; i < numOpcoes; i++) {
+                let input = document.createElement('input');
+                input.type = 'text';
+                input.className = 'opcao-input';
+                input.placeholder = `Opção ${i + 1}`;
+                input.name = `resposta${i + inputsExistentes}`;
+                opcoesContainer.appendChild(input);
+            }
+        }
 
-        for (let i = 0; i < numOpcoes; i++) {
-            const input = document.createElement('input');
-            input.type = 'text';
-            input.className = 'opcao-input';
-            input.placeholder = `Opção ${i + 1}`;
-            input.name = `resposta${i + 1}`;
-            opcoesContainer.appendChild(input);
+        else if (numOpcoes < inputsExistentes) {
+            for (let i = inputsExistentes; i > numOpcoes; i--) {
+                const lastInput = opcoesContainer.querySelector('.opcao-input:last-of-type');
+                if (lastInput) {
+                    lastInput.remove();
+                }
+            }
         }
     }
-
 }
+
 
 function dispararAlerta() {
     var alert = document.getElementById('alertaCustomizado');
@@ -62,59 +70,10 @@ function carregarQuestao() {
     if (numeroQuestao != null && numeroQuestao !== '' && tipoAvaliacao !== null && tipoAvaliacao !== '') {
         const dados = {numeroQuestao, tipoAvaliacao};
 
-        fetch('/manutencao/carregar', {
-            method: 'POST', headers: {
-                'Content-Type': 'application/json',
-            }, body: JSON.stringify(dados),
-        })
-            .then(response => response.json())
-            .then(data => {
-                carregaDados(data);
-            })
-            .catch((error) => {
-                disparaErroAjax();
-            });
+        document.getElementById("formulario").submit();
     }
 }
 
-function carregaDados(data) {
-    document.getElementById("categoriaQuestao").classList.remove('hidden');
-    document.getElementById("tipoQuestao").classList.remove('hidden');
-    document.getElementById("dsQuestao").classList.remove('hidden');
-    document.getElementById("numeroQuestao").disabled = true;
-    document.getElementById("tipoAvaliacao").disabled = true;
 
-    document.getElementById("dsQuestao").innerHTML = data['questao-dsQuestao'];
-    let questao = ["categoriaQuestao","tipoQuestao","tipoAvaliacao"];
 
-    selecionarOpcao(questao[0],data);
-    selecionarOpcao(questao[1],data);
-    selecionarOpcao(questao[2],data);
-    toggleOpcoes();
-
-}
-
-function selecionarOpcao(questao,data) {
-
-    let selectElement = document.getElementById(questao);
-    let valorSelecionado = data["questao-" + questao];
-
-    for (var i = 0; i < selectElement.options.length; i++) {
-        var option = selectElement.options[i];
-        if (option.value === valorSelecionado) {
-            option.selected = true;
-            break;
-        }
-    }
-}
-
-function disparaErroAjax() {
-    document.getElementById("numeroQuestao").classList.add('hidden');
-    document.getElementById("tipoAvaliacao").classList.add('hidden');
-    document.getElementById("erro").classList.remove('hidden');
-    let form = document.getElementById("formulario");
-    form.action = '/manutencao/exibirAlterar'
-    form.method = 'GET';
-    document.getElementById("botao-form").innerHTML = 'Voltar'
-}
 

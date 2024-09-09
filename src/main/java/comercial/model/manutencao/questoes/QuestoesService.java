@@ -26,10 +26,13 @@ public class QuestoesService {
     ItemDominioDAO itemDominioDAO;
 
     @Autowired
-    private DominioRepository dominioRepository;
+    DominioRepository dominioRepository;
 
     @Autowired
-    private QuestoesMultiplaEscolhaDAO questoesMultiplaEscolhaDAO;
+    QuestoesMultiplaEscolhaDAO questoesMultiplaEscolhaDAO;
+
+    @Autowired
+    QuestoesRepository questoesRepository;
 
     public void carregarCombo(Map formData) {
 
@@ -81,7 +84,7 @@ public class QuestoesService {
 
         questoesDAO.incluirQuestao(questoes);
 
-        if(Integer.parseInt(formData.get("tipoQuestao")) == 2) {
+        if (Integer.parseInt(formData.get("tipoQuestao")) == 2) {
             setQuestaoMultiplaEscolha(formData, questoes);
         }
     }
@@ -90,6 +93,10 @@ public class QuestoesService {
         Questoes questoes = new Questoes();
 
         List<Dominio> dominios = dominioRepository.findAll();
+
+        if(formData.containsKey("operacao") && (formData.get("operacao").equals("alterar") || formData.get("operacao").equals("excluir") ) ) {
+            questoes.setId(Integer.parseInt(formData.get("idQuestao")));
+        }
 
         questoes.setCdQuestao(Integer.parseInt(formData.get("numeroQuestao")));
         questoes.setDsQuestao(formData.get("dsQuestao"));
@@ -102,7 +109,12 @@ public class QuestoesService {
     }
 
     private void setQuestaoMultiplaEscolha(Map<String, String> formData, Questoes questoes) {
-        QuestoesMultiplaEscolha dto = new QuestoesMultiplaEscolha();
+
+        QuestoesMultiplaEscolha dto = questoesMultiplaEscolhaDAO.consultarQuestaoMultiplaEscolha(questoes);
+
+        if (dto == null) {
+            dto = new QuestoesMultiplaEscolha();
+        }
 
         dto.setQuestoes(questoes);
 
@@ -117,7 +129,7 @@ public class QuestoesService {
         dto.setResposta9(formData.get("resposta9"));
         dto.setResposta10(formData.get("resposta10"));
 
-        questoesMultiplaEscolhaDAO.incluir(dto);
+        questoesMultiplaEscolhaDAO.alterar(dto);
     }
 
     private ItemDominio getTipoQuestao(Map<String, String> formData, List<Dominio> dominios) {
@@ -196,15 +208,15 @@ public class QuestoesService {
 
         int numeroQuestao = Integer.parseInt(formData.get("numeroQuestao"));
 
-        Questoes questoes = questoesDAO.consultar(numeroQuestao,tipoAvaliacao);
+        Questoes questoes = questoesDAO.consultar(numeroQuestao, tipoAvaliacao);
 
         ItemDominio tipoQuestao = getTipoQuestao(questoes, dominios);
 
-        if(questoes != null) {
-            if(questoes.getFlagTipoQuestao().getCdDominio() == 1) {
-                formData.put("multiplaEscolha","false");
-            } else if(questoes.getFlagTipoQuestao().getCdDominio() == 2) {
-                formData.put("multiplaEscolha","true");
+        if (questoes != null) {
+            if (questoes.getFlagTipoQuestao().getCdDominio() == 1) {
+                formData.put("multiplaEscolha", "false");
+            } else if (questoes.getFlagTipoQuestao().getCdDominio() == 2) {
+                formData.put("multiplaEscolha", "true");
             }
         }
 
@@ -236,5 +248,29 @@ public class QuestoesService {
         return formData.containsKey("tipoAvaliacao") && formData.containsKey("numeroQuestao") &&
                 !StringUtil.isNullOrEmpty(formData.get("tipoAvaliacao")) &&
                 !StringUtil.isNullOrEmpty(formData.get("numeroQuestao"));
+    }
+
+    public void alterar(Map<String, String> formData) {
+        validaCampos(formData);
+
+        Questoes questoes = setCamposForm(formData);
+
+        questoesDAO.alterarQuestao(questoes);
+
+        if (Integer.parseInt(formData.get("tipoQuestao")) == 2) {
+            setQuestaoMultiplaEscolha(formData, questoes);
+        }
+    }
+
+    public void excluir(Map<String, String> formData) {
+
+        Questoes questoes = questoesRepository.findQuestoesById(Integer.parseInt(formData.get("idQuestao")));
+
+        questoesDAO.excluirQuestao(questoes);
+
+        if (Integer.parseInt(formData.get("tipoQuestao")) == 2) {
+            QuestoesMultiplaEscolha dto = questoesMultiplaEscolhaDAO.consultarQuestaoMultiplaEscolha(questoes);
+            questoesMultiplaEscolhaDAO.excluir(dto);
+        }
     }
 }

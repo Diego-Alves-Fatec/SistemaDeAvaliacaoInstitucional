@@ -1,219 +1,47 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Questões</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            box-sizing: border-box;
-            font-family: 'Poppins', Arial, sans-serif;
-            color: #333;
-        }
-
-        body {
-            background-color: #ffffff;
-            margin: 0;
-            font-family: 'Poppins', Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            height: auto;
-            overflow: auto;
-        }
-
-        body ::placeholder {
-            color: #333;
-            opacity: 1;
-        }
-
-        main {
-            height: auto;
-            width: 70%;
-            display: flex;
-            justify-content: center;
-        }
-
-        .menu-lateral {
-            width: 250px;
-            background-color: #2b4c7e;
-            height: 100%;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
-            box-sizing: border-box;
-            overflow-y: auto;
-        }
-
-        .menu-lateral h2 {
-            font-size: 24px;
-            margin: 0 0 20px;
-            color: #ffffff;
-            padding-left: 10px;
-        }
-
-        .menu-lateral a {
-            display: block;
-            text-decoration: none;
-            color: #ffffff;
-            font-size: 18px;
-            margin: 10px 0;
-            padding: 10px;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-
-        .menu-lateral a:hover {
-            background-color: #567ebb;
-        }
-
-        .form-container {
-            padding: 0 20px;
-            width: 100%;
-            height: 100vh;
-            overflow-y: auto;
-        }
-
-        #main {
-            background-color: #f4f7fa;
-            text-align: center;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            width: 100%;
-            margin: 0 auto;
-            box-sizing: border-box;
-        }
-
-        #main h2 {
-            margin: 0 0 15px;
-            font-size: 28px;
-            color: #2b3e50;
-        }
-
-        #main input[type="text"],
-        #main input[type="number"],
-        #main select,
-        #main textarea {
-            margin-bottom: 15px;
-            padding: 12px;
-            font-size: 16px;
-            border: 1px solid #cccccc;
-            border-radius: 5px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        #main textarea {
-            resize: vertical;
-        }
-
-        #main input[type="number"] {
-            appearance: textfield;
-            -moz-appearance: textfield;
-            -webkit-appearance: none;
-        }
-
-        #main input[type="number"]::-webkit-inner-spin-button,
-        #main input[type="number"]::-webkit-outer-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-
-        #main button {
-            margin-top: 15px;
-            padding: 10px 20px;
-            font-size: 14px;
-            border: none;
-            border-radius: 5px;
-            background-color: #2b4c7e;
-            color: #ffffff;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            width: 30%;
-        }
-
-        #main button:hover {
-            background-color: #567ebb;
-        }
-
-        #opcoes-adicionais {
-            display: none;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        .opcao-input {
-            margin-bottom: 15px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/fragmentos/menu.css">
+    <link rel="stylesheet" href="/css/fragmentos/base.css">
+    <link rel="stylesheet" href="/css/fragmentos/alerta.css">
+    <script src="/js/fragmentos/menu.js"></script>
+    <script src="/js/manutencao/alterar.js"></script>
+    <script src="/js/fragmentos/alerta.js"></script>
 </head>
 
 <body>
 <main>
     <div th:replace="~{fragmentos/menu.html :: menu-lateral}"></div>
+    <div th:replace="~{fragmentos/alerta.html :: alerta}"></div>
     <div class="form-container">
         <div id="main">
-            <h2>Exclusão de Questões</h2>
-            <form action="#" method="POST">
-                <input type="number" placeholder="Informe o número da questão">
-                <select id="tipoAvaliacao" name="tipoAvaliacao" onchange="toggleOpcoes()">
-                    <option value="" disabled selected>Tipo de Avaliação</option>
-                    <option value="1">Autoavaliação Institucional</option>
-                    <option value="2">Avaliação de Satisfação</option>
-                </select>
-<!--                <input type="text" placeholder="Informe a área da questão">-->
-<!--                <textarea placeholder="Informe a questão" required rows="4"></textarea>-->
-<!--                -->
-<!--                <select id="questao-tipo" name="questao-tipo" onchange="toggleOpcoes()">-->
-<!--                    <option value="unica">Descritiva</option>-->
-<!--                    <option value="multipla">Múltipla Escolha</option>-->
-<!--                </select>-->
-<!--                <div id="opcoes-adicionais">-->
-<!--                    <input type="number" id="num-opcoes" placeholder="Número de opções" min="2" max="10"-->
-<!--                           oninput="gerarOpcoes()">-->
-<!--                    <div id="opcoes-container"></div>-->
-<!--                </div>-->
-                <button type="submit">Excluir</button>
+            <h2>Alterar Questão</h2>
+            <form action="/manutencao/consultar" id="formulario" method="POST">
+                <input type="hidden" id="operacao" name="operacao" value="excluir">
+
+                <div>
+                    <input type="number" id="numeroQuestao" name="numeroQuestao"
+                           placeholder="Informe o número da questão"
+                           onblur="carregarQuestao()">
+
+                    <select id="tipoAvaliacao" name="tipoAvaliacao" onblur="carregarQuestao()">
+                        <option value="" disabled selected>Tipo de Avaliação</option>
+                        <option th:each="item : ${formData['tipoAvaliacao']}"
+                                th:value="${item.cdDominio}"
+                                th:text="${item.dsItemDominio}">
+                        </option>
+                    </select>
+
+                </div>
+
             </form>
         </div>
     </div>
-
-    <script>
-        function toggleOpcoes() {
-            const tipoQuestao = document.getElementById('questao-tipo').value;
-            const opcoesAdicionais = document.getElementById('opcoes-adicionais');
-
-            if (tipoQuestao === 'multipla') {
-                opcoesAdicionais.style.display = 'block';
-                gerarOpcoes();
-            } else {
-                opcoesAdicionais.style.display = 'none';
-                document.getElementById('opcoes-container').innerHTML = ''; // Limpa as opções ao selecionar escolha única
-            }
-        }
-
-        function gerarOpcoes() {
-            const numOpcoes = Math.max(4, Math.min(10, parseInt(document.getElementById('num-opcoes').value) || 0));
-            const opcoesContainer = document.getElementById('opcoes-container');
-
-            opcoesContainer.innerHTML = ''; // Limpa opções existentes
-
-            for (let i = 0; i < numOpcoes; i++) {
-                const input = document.createElement('input');
-                input.type = 'text';
-                input.className = 'opcao-input';
-                input.placeholder = `Opção ${i + 1}`;
-                opcoesContainer.appendChild(input);
-            }
-        }
-    </script>
-
+</main>
 </body>
-
 </html>

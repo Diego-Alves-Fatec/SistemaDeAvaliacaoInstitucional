@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de Questões</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/manutencao/consultar_resultados.css">
+    <link rel="stylesheet" href="/css/fragmentos/menu.css">
+    <link rel="stylesheet" href="/css/fragmentos/base.css">
+    <script src="/js/fragmentos/menu.js"></script>
+</head>
+
+<body>
+<main>
+    <div th:replace="~{fragmentos/menu.html :: menu-lateral}"></div>
+    <div class="form-container">
+        <div id="main">
+            <h2>Resultado da Consulta:</h2>
+            <form action="/manutencao/excluir" method="POST">
+                <input type="hidden" name="operacao" value="excluir">
+                <input type="hidden" name="idQuestao" th:value="${questoes.id != null ? questoes.id : ''}">
+                <div class="questao-container" th:unless="${error}">
+                    <div class="questao-titulo" th:text="'Questão ' + ${questoes.getCdQuestao()}"></div>
+                    <div class="questao-descricao" th:text="${questoes.getDsQuestao()}"></div>
+                    <div class="questao-info">
+                        <p th:text="'Tipo de Avaliação: ' + ${questoes.flagTipoAvaliacao.dsItemDominio}"></p>
+                        <p th:text="'Categoria da Questão: ' + ${questoes.flagCategoriaQuestao.dsItemDominio}"></p>
+                        <p th:text="'Tipo de Questão: ' + ${questoes.flagTipoQuestao.dsItemDominio}"></p>
+                    </div>
+
+                    <div class="questao-respostas" th:if="${multiplaEscolha}">
+                        <h4>Alternativas:</h4>
+                        <ul>
+                            <li th:each="resposta : ${respostas}">
+                                <span th:text="${resposta}"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div th:if="${error}">
+                    <p>Não foram encontrados resultados.</p>
+                </div>
+                <button type="submit">Excluir</button>
+            </form>
+        </div>
+    </div>
+</main>
+<script>
+
+</script>
+</body>
+
+</html>

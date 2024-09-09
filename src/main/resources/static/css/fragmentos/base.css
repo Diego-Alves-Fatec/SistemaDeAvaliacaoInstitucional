@@ -38,6 +38,10 @@ main {
     box-sizing: border-box;
 }
 
+.hidden {
+    display: none;
+}
+
 #main h2 {
     margin: 0 0 15px;
     font-size: 28px;

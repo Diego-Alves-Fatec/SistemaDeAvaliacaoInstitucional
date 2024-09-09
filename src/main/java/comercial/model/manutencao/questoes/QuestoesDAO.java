@@ -48,4 +48,11 @@ public class QuestoesDAO {
         return questoesRepository.findQuestoesByCdQuestaoAndFlagTipoAvaliacao(numeroQuestao, tipoAvaliacao);
     }
 
+    public void alterarQuestao(Questoes questoes) {
+        questoesRepository.save(questoes);
+    }
+
+    public void excluirQuestao(Questoes questoes) {
+        questoesRepository.delete(questoes);
+    }
 }

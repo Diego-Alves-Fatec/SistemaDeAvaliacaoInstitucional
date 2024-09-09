@@ -55,56 +55,49 @@ public class ManutencaoController extends BaseController {
                 List<String> respostas = questoesService.consultarQuestoesMultiplaEscolha(questoes);
                 model.addAttribute("respostas", respostas);
             }
-
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
         }
-        return "manutencao/consultar_resultados";
+        if (formData.containsKey("operacao") && formData.get("operacao").equals("alterar")) {
+            questoesService.carregarCombo(formData);
+            return "manutencao/alterar_resultados";
+        } else if (formData.containsKey("operacao") && formData.get("operacao").equals("excluir")) {
+            return "manutencao/excluir_resultados";
+        } else {
+            return "manutencao/consultar_resultados";
+        }
+
     }
 
 
     @GetMapping("/exibirAlterar")
-    public String exibirAlterar(Model model) {
+    public String exibirAlterar(@ModelAttribute("formData") Map<String, String> formMap, Model model) {
 
         Map<String, ?> formData = new HashMap<>();
         questoesService.carregarCombo(formData);
         model.addAttribute("formData", formData);
         return "manutencao/alterar";
+
     }
 
-    @GetMapping("/alterar")
-    public String alterar() {
-        return "manutencao/alterar";
+    @PostMapping("/alterar")
+    public String alterar(@ModelAttribute("formData") Map<String, String> formData, Model model) {
+        questoesService.alterar(formData);
+        return "redirect:/manutencao/exibirAlterar";
     }
 
-    @GetMapping("/excluir")
-    public String excluir() {
+    @GetMapping("/exibirExcluir")
+    public String exibirExcluir(@ModelAttribute("formData") Map<String, String> formMap, Model model) {
+        Map<String, ?> formData = new HashMap<>();
+        questoesService.carregarCombo(formData);
+        model.addAttribute("formData", formData);
         return "manutencao/excluir";
     }
 
-    @PostMapping("/carregar")
-    public ResponseEntity<?> carregar(@RequestBody Map<String, String> formData, Model model) {
-        try {
-            if (questoesService.validaCarregar(formData)) {
-                Questoes questao = questoesService.consultar(formData);
-                model.addAttribute("questao", questao);
-                if (formData.get("multiplaEscolha").equals("true")) {
-                    List<String> respostas = questoesService.consultarQuestoesMultiplaEscolha(questao);
-                    model.addAttribute("respostas", respostas);
-                }
-                formData.put("questao-dsQuestao", questao.getDsQuestao());
-                formData.put("questao-categoriaQuestao", String.valueOf(questao.getFlagCategoriaQuestao().getCdDominio()));
-                formData.put("questao-tipoQuestao", String.valueOf(questao.getFlagTipoQuestao().getCdDominio()));
-                formData.put("questao-tipoAvaliacao", String.valueOf(questao.getFlagTipoAvaliacao().getCdDominio()));
-
-                questoesService.carregarCombo(formData);
-                return ResponseEntity.ok(formData);
-            } else {
-                return ResponseEntity.ok("Campos obrigatórios não preenchidos.");
-            }
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-        }
+    @PostMapping("/excluir")
+    public String excluir(@ModelAttribute("formData") Map<String, String> formData, Model model) {
+        questoesService.excluir(formData);
+        return "redirect:/manutencao/exibirExcluir";
     }
 
     @GetMapping("/construcao")

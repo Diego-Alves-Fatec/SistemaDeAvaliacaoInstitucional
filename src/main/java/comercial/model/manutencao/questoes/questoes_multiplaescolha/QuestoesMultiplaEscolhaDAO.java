@@ -14,7 +14,15 @@ public class QuestoesMultiplaEscolhaDAO {
         questoesMultiplaEscolhaRepository.save(dto);
     }
 
+    public void alterar(QuestoesMultiplaEscolha dto) {
+        questoesMultiplaEscolhaRepository.save(dto);
+    }
+
     public QuestoesMultiplaEscolha consultarQuestaoMultiplaEscolha(Questoes questoes) {
         return questoesMultiplaEscolhaRepository.findByQuestoes(questoes);
+    }
+
+    public void excluir(QuestoesMultiplaEscolha dto) {
+        questoesMultiplaEscolhaRepository.delete(dto);
     }
 }
