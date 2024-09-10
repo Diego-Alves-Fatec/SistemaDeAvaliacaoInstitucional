@@ -1,6 +1,6 @@
 package comercial.model.manutencao.questoes;
 
-import ch.qos.logback.core.util.StringUtil;
+
 import comercial.Utilitarios.DominioConstantesCombos;
 import comercial.model.dominio.Dominio;
 import comercial.model.dominio.DominioRepository;
@@ -244,12 +244,6 @@ public class QuestoesService {
     }
 
 
-    public boolean validaCarregar(Map<String, String> formData) {
-        return formData.containsKey("tipoAvaliacao") && formData.containsKey("numeroQuestao") &&
-                !StringUtil.isNullOrEmpty(formData.get("tipoAvaliacao")) &&
-                !StringUtil.isNullOrEmpty(formData.get("numeroQuestao"));
-    }
-
     public void alterar(Map<String, String> formData) {
         validaCampos(formData);
 
@@ -266,11 +260,12 @@ public class QuestoesService {
 
         Questoes questoes = questoesRepository.findQuestoesById(Integer.parseInt(formData.get("idQuestao")));
 
-        questoesDAO.excluirQuestao(questoes);
-
         if (Integer.parseInt(formData.get("tipoQuestao")) == 2) {
             QuestoesMultiplaEscolha dto = questoesMultiplaEscolhaDAO.consultarQuestaoMultiplaEscolha(questoes);
             questoesMultiplaEscolhaDAO.excluir(dto);
         }
+
+        questoesDAO.excluirQuestao(questoes);
+
     }
 }

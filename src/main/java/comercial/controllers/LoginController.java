@@ -23,7 +23,7 @@ public class LoginController extends BaseController {
 
         if (isValid) {
             model.addAttribute("mensagem", "Login bem-sucedido!");
-            return "redirect:/manutencao/exibirIncluir";
+            return "redirect:/manutencao/home";
         } else {
             model.addAttribute("mensagem", "Login ou Senha incorreta!");
             return "questionario/perguntas";

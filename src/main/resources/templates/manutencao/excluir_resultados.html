@@ -19,32 +19,36 @@
     <div class="form-container">
         <div id="main">
             <h2>Resultado da Consulta:</h2>
-            <form action="/manutencao/excluir" method="POST">
-                <input type="hidden" name="operacao" value="excluir">
-                <input type="hidden" name="idQuestao" th:value="${questoes.id != null ? questoes.id : ''}">
-                <div class="questao-container" th:unless="${error}">
-                    <div class="questao-titulo" th:text="'Questão ' + ${questoes.getCdQuestao()}"></div>
-                    <div class="questao-descricao" th:text="${questoes.getDsQuestao()}"></div>
-                    <div class="questao-info">
-                        <p th:text="'Tipo de Avaliação: ' + ${questoes.flagTipoAvaliacao.dsItemDominio}"></p>
-                        <p th:text="'Categoria da Questão: ' + ${questoes.flagCategoriaQuestao.dsItemDominio}"></p>
-                        <p th:text="'Tipo de Questão: ' + ${questoes.flagTipoQuestao.dsItemDominio}"></p>
-                    </div>
+            <form th:action="${questoes != null ? '/manutencao/excluir' : '/manutencao/exibirExcluir'}" method="POST">
+                <div th:unless="${error}">
+                    <input type="hidden" name="operacao" value="excluir">
+                    <input type="hidden" name="idQuestao" th:value="${questoes.id != null ? questoes.id : ''}">
+                    <div class="questao-container" th:unless="${error}">
+                        <div class="questao-titulo" th:text="'Questão ' + ${questoes.getCdQuestao()}"></div>
+                        <div class="questao-descricao" th:text="${questoes.getDsQuestao()}"></div>
+                        <div class="questao-info">
+                            <p th:text="'Tipo de Avaliação: ' + ${questoes.flagTipoAvaliacao.dsItemDominio}"></p>
+                            <p th:text="'Categoria da Questão: ' + ${questoes.flagCategoriaQuestao.dsItemDominio}"></p>
+                            <p th:text="'Tipo de Questão: ' + ${questoes.flagTipoQuestao.dsItemDominio}"></p>
+                        </div>
 
-                    <div class="questao-respostas" th:if="${multiplaEscolha}">
-                        <h4>Alternativas:</h4>
-                        <ul>
-                            <li th:each="resposta : ${respostas}">
-                                <span th:text="${resposta}"></span>
-                            </li>
-                        </ul>
+                        <div class="questao-respostas" th:if="${multiplaEscolha}">
+                            <h4>Alternativas:</h4>
+                            <ul>
+                                <li th:each="resposta : ${respostas}">
+                                    <span th:text="${resposta}"></span>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
-                <div th:if="${error}">
+                <div th:if="${questoes == null or error != null}">
                     <p>Não foram encontrados resultados.</p>
+                    <button type="submit">Voltar</button>
                 </div>
-                <button type="submit">Excluir</button>
+
+                <button th:if="${questoes != null and error == null}" type="submit">Excluir</button>
             </form>
         </div>
     </div>

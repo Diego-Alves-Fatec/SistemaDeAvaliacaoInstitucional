@@ -25,6 +25,12 @@ public class ManutencaoController extends BaseController {
     @Autowired
     private QuestoesService questoesService;
 
+    @RequestMapping(value = "/home", method = {RequestMethod.GET, RequestMethod.POST})
+    public String exibirHome(@ModelAttribute("formData") Map<String, String> formMap, Model model) {
+
+        return "manutencao/home";
+    }
+
     @GetMapping("/exibirIncluir")
     public String exibirIncluir(Model model) {
 
@@ -69,8 +75,7 @@ public class ManutencaoController extends BaseController {
 
     }
 
-
-    @GetMapping("/exibirAlterar")
+    @RequestMapping(value = "/exibirAlterar", method = {RequestMethod.GET, RequestMethod.POST})
     public String exibirAlterar(@ModelAttribute("formData") Map<String, String> formMap, Model model) {
 
         Map<String, ?> formData = new HashMap<>();
@@ -86,7 +91,7 @@ public class ManutencaoController extends BaseController {
         return "redirect:/manutencao/exibirAlterar";
     }
 
-    @GetMapping("/exibirExcluir")
+    @RequestMapping(value = "/exibirExcluir", method = {RequestMethod.GET, RequestMethod.POST})
     public String exibirExcluir(@ModelAttribute("formData") Map<String, String> formMap, Model model) {
         Map<String, ?> formData = new HashMap<>();
         questoesService.carregarCombo(formData);

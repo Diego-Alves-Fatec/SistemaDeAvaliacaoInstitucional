@@ -6,6 +6,7 @@
 <body>
 <div th:fragment="menu-lateral">
     <div class="menu-lateral">
+        <a th:href="@{/manutencao/home}">Home</a>
         <a onclick="toggleSubmenu('questoes')">Questões</a>
         <div id="questoes">
             <a th:href="@{/manutencao/exibirIncluir}">Incluir</a>

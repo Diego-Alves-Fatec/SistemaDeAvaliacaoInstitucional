@@ -120,3 +120,30 @@ main {
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
+
+.questao-container {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 20px 0;
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    text-align: start;
+}
+
+.questao-titulo {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.questao-descricao {
+    font-size: 16px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.questao-info {
+    font-size: 14px;
+    color: #555;
+}
