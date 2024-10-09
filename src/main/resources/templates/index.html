@@ -1,32 +1,42 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/index.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
 <div class="container">
-    <div id="main">
-        <div>
-            <h2>ENTRAR</h2>
-            <form action="/formLogin" method="POST">
-                <input type="email" name="login" placeholder="Digite seu email institucional" required>
-                <input type="password" name="senha" placeholder="Digite seu CPF" required>
-                <a href="#">Esqueceu sua senha?</a>
-                <button type="submit">Entrar</button>
-            </form>
-        </div>
+  <div id="main">
+    <div th:if="${criptografia == null}">
+      <h2>ENTRAR</h2>
+      <form action="/loginController" method="post">
+        <input type="email" name="login" placeholder="Digite seu email institucional" required>
+        <span th:if="${erro}" >O email informado não foi encontrado!</span>
+<!--        <input type="password" name="senha" placeholder="Digite seu CPF" required>-->
+<!--        <a href="#">Esqueceu sua senha?</a>-->
+        <button type="submit">Entrar</button>
+      </form>
     </div>
-    <div id="boas-vindas">
-        <p>Olá,<br>
-            Bem-vindo ao Sistema<br>
-            de Avaliação Institucional<br>
-            da FATEC</p>
+    <div th:if="${criptografia}">
+      <h2>CRIPTOGRAFIA</h2>
+      <p>Para proteger sua privacidade, pedimos que insira uma chave aleatória conhecida apenas por você.<br> Isso garantirá o anonimato de sua resposta e manterá sua identidade protegida.</p>
+      <form action="/criptografiaController" method="post">
+        <input type="hidden" th:name="${login}">
+        <input type="text" name="criptografia" placeholder="Ex: limonada, viagem, jabuti.." required>
+        <button type="submit">Entrar</button>
+      </form>
     </div>
+  </div>
+  <div id="boas-vindas">
+    <p>Olá,<br>
+      Bem-vindo ao Sistema<br>
+      de Avaliação Institucional<br>
+      da FATEC</p>
+  </div>
 </div>
 <script src="/js/index_js.js"></script>
 </body>

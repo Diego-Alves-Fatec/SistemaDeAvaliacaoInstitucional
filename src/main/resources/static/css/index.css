@@ -132,6 +132,12 @@ body {
     text-transform: uppercase;
 }
 
+span {
+    color: red;
+    font-weight: bold;
+    padding-bottom: 20px;
+}
+
 @media (max-width: 768px) {
 
     body {

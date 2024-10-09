@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avaliação Institucional</title>
+
+</head>
+<script>
+    // Criação do formulário
+    let form = document.createElement('form');
+    form.setAttribute('id', 'dynamic-form');
+    form.setAttribute('action', '/persistir');
+    form.setAttribute('method', 'POST');
+
+    // Criação do campo "Título"
+    var titleLabel = document.createElement('label');
+    titleLabel.innerHTML = 'Título:';
+    var titleInput = document.createElement('input');
+    titleInput.setAttribute('type', 'text');
+    titleInput.setAttribute('name', 'titulo');
+    titleInput.setAttribute('required', 'required');
+
+    // Criação do campo "Descrição"
+    var descriptionLabel = document.createElement('label');
+    descriptionLabel.innerHTML = 'Descrição:';
+    var descriptionInput = document.createElement('textarea');
+    descriptionInput.setAttribute('name', 'descricao');
+    descriptionInput.setAttribute('rows', '4');
+    descriptionInput.setAttribute('cols', '50');
+    descriptionInput.setAttribute('required', 'required');
+
+    // Criação do botão de envio
+    var submitButton = document.createElement('button');
+    submitButton.setAttribute('type', 'submit');
+    submitButton.innerHTML = 'Enviar';
+
+    // Adicionando os campos ao formulário
+    form.appendChild(titleLabel);
+    form.appendChild(titleInput);
+    form.appendChild(document.createElement('br')); // Quebra de linha
+    form.appendChild(descriptionLabel);
+    form.appendChild(descriptionInput);
+    form.appendChild(document.createElement('br')); // Quebra de linha
+    form.appendChild(submitButton);
+
+    // Adiciona o formulário ao corpo do documento ou a um contêiner
+    document.body.appendChild(form); // ou document.getElementById('form-container').appendChild(form);
+
+
+
+</script>
+
+<body>
+
+
+</main>
+</body>
+</html>
