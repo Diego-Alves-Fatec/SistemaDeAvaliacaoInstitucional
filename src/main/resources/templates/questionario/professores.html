@@ -141,20 +141,7 @@
             width: 100px;
         }
 
-        #subtitulo-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
 
-        #subtitulo {
-            flex-grow: 1;
-        }
-
-        #subtitulo-toggle {
-            width: auto;
-            cursor: pointer;
-        }
 
 
         @keyframes slideIn {
@@ -220,116 +207,83 @@
 
 <body>
 
-<header th:if="${currentPage == 0}">
+<header>
     <h2>Pesquisa de Satisfação – Estudantes</h2>
     <hr style="border: 1px solid #ffffff; margin: 10px 0;">
     <div class="informativo">
-        <div id="subtitulo-container">
-            <div id="subtitulo"><p><strong>Prezado(a) Estudante,</strong></p></div>
-            <div><a id="subtitulo-toggle" href="#">Minimizar</a></div>
-        </div>
-        <br>
-        <p>A Comissão Própria de Avaliação - CPA tem por objetivo com esta pesquisa, identificar a sua satisfação em
-            relação
-            a questões gerais relacionadas ao curso dessa instituição.
-            Neste sentido a Pesquisa de Satisfação é de fundamental importância para o aprimoramento da gestão
-            acadêmica,
-            pois fornece subsídios para a melhoria da qualidade do ensino.</p><br>
-
-        <p>Este instrumento será utilizado pela CPA, como coleta de dados para a elaboração do Relatório e
-            consequentemente
-            Plano de Ação para melhorias a partir dos resultados das pesquisas.</p><br>
-
-        <p>As questões serão avaliadas conforme a Net Promoter Score - NPS. Trata-se de uma pesquisa que mede a
-            satisfação
-            dos clientes. O índice aponta a percepção que o cliente tem da marca, bem como o seu nível de
-            satisfação.</p>
-        <br>
-
-        <p>Para isto, contamos com a sua colaboração respondendo as questões, marcando a sua avaliação em apenas uma das
-            alternativas. Utilize os campos de texto aberto para expressar sua opinião e percepções.</p><br>
-        <hr>
-        <br>
-        <p><strong>Antes de Iniciar, é importante que você entenda a representatividade das repostas:</strong></p>
-        <p>
-            Excelente = 10<br>
-            Bom = 9<br>
-            Regular = entre 7 e 8<br>
-            Ruim = entre 3 e 6<br>
-            Não tenho opinião = entre 1 e 2<br>
-        </p>
+        <!--        <hr>-->
+        <p>Agora responda sobre os professores:</p>
+        <!--        <br>-->
+        <!--        <p><strong>Antes de Continuar, é importante lembrar a representatividade das repostas:</strong></p>-->
+        <!--        <p>-->
+        <!--            Excelente = 10<br>-->
+        <!--            Bom = 9<br>-->
+        <!--            Regular = entre 7 e 8<br>-->
+        <!--            Ruim = entre 3 e 6<br>-->
+        <!--            Não tenho opinião = entre 1 e 2<br>-->
+        <!--        </p>-->
     </div>
 </header>
 
 <main>
-    <form action="/formController" method="post" id="questions-form">
-        <input type="hidden" name="currentPage" th:value="${currentPage}"/>
+    <form action="/formProfessores" method="post" id="questions-form">
         <div id="questions-container">
-            <div th:each="questao: ${questoes}" class="question">
-                <h3 th:text="${questao.getIdQuestao()} + '. ' + ${questao.dsQuestao}">Título da Pergunta</h3>
+            <div th:each="disciplina : ${disciplinas}" class="conteiner-professor">
+                <h3 th:text="${disciplina.getProfessor()}"></h3><br>
+                <div th:each="questao: ${questoes}" class="question">
+                    <h3 th:text="${questao.dsQuestao}">Título da Pergunta</h3>
 
-                <ul>
-                    <li th:if="${questao.alternativas.getFlagAlternativa1() != null}">
-                        <label>
-                            <input type="radio" th:name="'Questao_' + ${questao.idQuestao}"
-                                   th:value="${questao.alternativas.getFlagAlternativa1().getIdItemDominio()}"
-                                   required/>
-                            <span th:text="${questao.alternativas.getFlagAlternativa1().dsItemDominio}">Texto da Alternativa</span>
-                        </label>
-                    </li>
+                    <ul>
+                        <li th:if="${questao.alternativas.getFlagAlternativa1() != null}">
+                            <label>
+                                <input type="radio" th:name="${disciplina.getIdDisciplina()} + '_Questao_' + ${questao.idQuestao}"
+                                       th:value="${questao.alternativas.getFlagAlternativa1().getIdItemDominio()}"
+                                       required/>
+                                <span th:text="${questao.alternativas.getFlagAlternativa1().dsItemDominio}">Texto da Alternativa</span>
+                            </label>
+                        </li>
 
-                    <li th:if="${questao.alternativas.getFlagAlternativa2() != null}">
-                        <label>
-                            <input type="radio" th:name="'Questao_' + ${questao.idQuestao}"
-                                   th:value="${questao.alternativas.getFlagAlternativa2().getIdItemDominio()}"/>
-                            <span th:text="${questao.alternativas.getFlagAlternativa2().dsItemDominio}">Texto da Alternativa</span>
-                        </label>
-                    </li>
+                        <li th:if="${questao.alternativas.getFlagAlternativa2() != null}">
+                            <label>
+                                <input type="radio" th:name="${disciplina.getIdDisciplina()} + '_Questao_' + ${questao.idQuestao}"
+                                       th:value="${questao.alternativas.getFlagAlternativa2().getIdItemDominio()}"/>
+                                <span th:text="${questao.alternativas.getFlagAlternativa2().dsItemDominio}">Texto da Alternativa</span>
+                            </label>
+                        </li>
 
-                    <li th:if="${questao.alternativas.getFlagAlternativa3() != null}">
-                        <label>
-                            <input type="radio" th:name="'Questao_' + ${questao.idQuestao}"
-                                   th:value="${questao.alternativas.getFlagAlternativa3().getIdItemDominio()}"/>
-                            <span th:text="${questao.alternativas.getFlagAlternativa3().dsItemDominio}">Texto da Alternativa</span>
-                        </label>
-                    </li>
+                        <li th:if="${questao.alternativas.getFlagAlternativa3() != null}">
+                            <label>
+                                <input type="radio" th:name="${disciplina.getIdDisciplina()} + '_Questao_' + ${questao.idQuestao}"
+                                       th:value="${questao.alternativas.getFlagAlternativa3().getIdItemDominio()}"/>
+                                <span th:text="${questao.alternativas.getFlagAlternativa3().dsItemDominio}">Texto da Alternativa</span>
+                            </label>
+                        </li>
 
-                    <li th:if="${questao.alternativas.getFlagAlternativa4() != null}">
-                        <label>
-                            <input type="radio" th:name="'Questao_' + ${questao.idQuestao}"
-                                   th:value="${questao.alternativas.getFlagAlternativa4().getIdItemDominio()}"/>
-                            <span th:text="${questao.alternativas.getFlagAlternativa4().dsItemDominio}">Texto da Alternativa</span>
-                        </label>
-                    </li>
+                        <li th:if="${questao.alternativas.getFlagAlternativa4() != null}">
+                            <label>
+                                <input type="radio" th:name="${disciplina.getIdDisciplina()} + '_Questao_' + ${questao.idQuestao}"
+                                       th:value="${questao.alternativas.getFlagAlternativa4().getIdItemDominio()}"/>
+                                <span th:text="${questao.alternativas.getFlagAlternativa4().dsItemDominio}">Texto da Alternativa</span>
+                            </label>
+                        </li>
 
-                    <li th:if="${questao.alternativas.getFlagAlternativa5() != null}">
-                        <label>
-                            <input type="radio" th:name="'Questao_' + ${questao.idQuestao}"
-                                   th:value="${questao.alternativas.getFlagAlternativa5().getIdItemDominio()}"/>
-                            <span th:text="${questao.alternativas.getFlagAlternativa5().dsItemDominio}">Texto da Alternativa</span>
-                        </label>
-                    </li>
-                </ul>
-            </div>
-
-            <div th:if="${currentPage + 1 == totalPages}" class="question">
-                <div class="question">
-                    <h3>Deixe sugestões para melhorias:</h3>
-                    <textarea name="sugestoes"></textarea>
+                        <li th:if="${questao.alternativas.getFlagAlternativa5() != null}">
+                            <label>
+                                <input type="radio" th:name="${disciplina.getIdDisciplina()} + '_Questao_' + ${questao.idQuestao}"
+                                       th:value="${questao.alternativas.getFlagAlternativa5().getIdItemDominio()}"/>
+                                <span th:text="${questao.alternativas.getFlagAlternativa5().dsItemDominio}">Texto da Alternativa</span>
+                            </label>
+                        </li>
+                    </ul>
                 </div>
             </div>
-
+            <h3>Deixe sugestões para melhorias:</h3>
+            <textarea name="sugestoes"></textarea>
         </div>
 
+
         <div class="pagination">
-
-            <button type="submit" name="action" value="anterior" th:if="${currentPage > 0}">Anterior</button>
-
-            <button type="submit" name="action" value="finalizar" th:if="${currentPage + 1 == totalPages}">Finalizar
-            </button>
-
-            <button type="submit" name="action" value="proximo" th:if="${currentPage + 1 < totalPages}">Próximo</button>
-
+            <button type="submit" name="action" value="finalizar">Finalizar</button>
         </div>
 
     </form>

@@ -75,10 +75,6 @@
             padding: 20px;
         }
 
-        .pagination a {
-            text-decoration: none;
-        }
-
         .pagination button {
             background-color: #2b4c7e;
             color: #ffffff;
@@ -95,7 +91,6 @@
             background-color: #567ebb;
         }
 
-
         header {
             background: linear-gradient(135deg, #ffffff, #f7f9fc);
             color: #2b3e50;
@@ -104,28 +99,13 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             width: 100%;
             max-width: 760px;
-            animation: slideIn 0.5s ease-in-out;
             position: relative;
-            overflow: hidden;
             text-align: start;
-        }
-
-        header:before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-bottom: 4px solid #567ebb;
-            z-index: 0;
         }
 
         header h2 {
             margin-bottom: 10px;
             font-size: 1.8rem;
-            position: relative;
-            z-index: 1;
             border-bottom: 1px solid #567ebb;
         }
 
@@ -133,12 +113,6 @@
             font-size: 1rem;
             margin-top: 5px;
             line-height: 1.6;
-            position: relative;
-            z-index: 1;
-        }
-
-        button {
-            width: 100px;
         }
 
         #subtitulo-container {
@@ -154,18 +128,18 @@
         #subtitulo-toggle {
             width: auto;
             cursor: pointer;
+            color: #2b4c7e;
+            font-size: 1rem;
+            border: 1px solid #2b4c7e;
+            border-radius: 5px;
+            padding: 5px 10px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            text-decoration: none;
         }
 
-
-        @keyframes slideIn {
-            0% {
-                transform: translateY(20px);
-                opacity: 0;
-            }
-            100% {
-                transform: translateY(0);
-                opacity: 1;
-            }
+        #subtitulo-toggle:hover {
+            background-color: #2b4c7e;
+            color: #fff;
         }
 
         textarea {
@@ -177,12 +151,11 @@
             border-radius: 8px;
         }
 
+        .minimizable-content {
+            display: block;
+        }
 
         @media (max-width: 768px) {
-            body {
-                padding: 20px;
-            }
-
             main {
                 padding: 10px;
             }
@@ -214,7 +187,28 @@
         }
     </style>
     <script>
+        function toggleHeaderContent() {
+            const content = document.querySelectorAll('.minimizable-content');
+            const toggleBtn = document.getElementById('subtitulo-toggle');
+            const subtitulo = document.getElementById('subtitulo');
 
+            content.forEach(function (element) {
+                if (element.style.display === "none") {
+                    element.style.display = "block";
+                    toggleBtn.textContent = "Minimizar";
+                    subtitulo.textContent = "Prezado(a) Estudante,";
+                } else {
+                    element.style.display = "none";
+                    toggleBtn.textContent = "Expandir";
+                    subtitulo.textContent = "";
+                }
+            });
+        }
+
+        window.onload = function () {
+            const toggleBtn = document.getElementById('subtitulo-toggle');
+            toggleBtn.onclick = toggleHeaderContent;
+        };
     </script>
 </head>
 
@@ -229,40 +223,38 @@
             <div><a id="subtitulo-toggle" href="#">Minimizar</a></div>
         </div>
         <br>
-        <p>A Comissão Própria de Avaliação - CPA tem por objetivo com esta pesquisa, identificar a sua satisfação em
-            relação
-            a questões gerais relacionadas ao curso dessa instituição.
-            Neste sentido a Pesquisa de Satisfação é de fundamental importância para o aprimoramento da gestão
-            acadêmica,
-            pois fornece subsídios para a melhoria da qualidade do ensino.</p><br>
-
-        <p>Este instrumento será utilizado pela CPA, como coleta de dados para a elaboração do Relatório e
-            consequentemente
-            Plano de Ação para melhorias a partir dos resultados das pesquisas.</p><br>
-
-        <p>As questões serão avaliadas conforme a Net Promoter Score - NPS. Trata-se de uma pesquisa que mede a
-            satisfação
-            dos clientes. O índice aponta a percepção que o cliente tem da marca, bem como o seu nível de
-            satisfação.</p>
-        <br>
-
-        <p>Para isto, contamos com a sua colaboração respondendo as questões, marcando a sua avaliação em apenas uma das
-            alternativas. Utilize os campos de texto aberto para expressar sua opinião e percepções.</p><br>
-        <hr>
-        <br>
-        <p><strong>Antes de Iniciar, é importante que você entenda a representatividade das repostas:</strong></p>
-        <p>
-            Excelente = 10<br>
-            Bom = 9<br>
-            Regular = entre 7 e 8<br>
-            Ruim = entre 3 e 6<br>
-            Não tenho opinião = entre 1 e 2<br>
-        </p>
+        <div class="minimizable-content">
+            <p>A Comissão Própria de Avaliação - CPA tem por objetivo com esta pesquisa, identificar a sua satisfação em
+                relação a questões gerais relacionadas ao curso dessa instituição. Neste sentido a Pesquisa de
+                Satisfação é de fundamental importância para o aprimoramento da gestão acadêmica, pois fornece subsídios
+                para a melhoria da qualidade do ensino.</p>
+            <br>
+            <p>Este instrumento será utilizado pela CPA, como coleta de dados para a elaboração do Relatório e
+                consequentemente Plano de Ação para melhorias a partir dos resultados das pesquisas.</p>
+            <br>
+            <p>As questões serão avaliadas conforme a Net Promoter Score - NPS. Trata-se de uma pesquisa que mede a
+                satisfação dos clientes. O índice aponta a percepção que o cliente tem da marca, bem como o seu nível de
+                satisfação.</p>
+            <br>
+            <p>Para isto, contamos com a sua colaboração respondendo as questões, marcando a sua avaliação em apenas uma
+                das alternativas. Utilize os campos de texto aberto para expressar sua opinião e percepções.</p>
+            <br>
+            <hr>
+            <br>
+            <p><strong>Antes de Iniciar, é importante que você entenda a representatividade das repostas:</strong></p>
+            <p>
+                Excelente = 10<br>
+                Bom = 9<br>
+                Regular = entre 7 e 8<br>
+                Ruim = entre 3 e 6<br>
+                Não tenho opinião = entre 1 e 2<br>
+            </p>
+        </div>
     </div>
 </header>
 
 <main>
-    <form action="/formController" method="post" id="questions-form">
+    <form action="/formInstituicao" method="post" id="questions-form">
         <div id="questions-container">
             <div th:each="questao: ${questoes}" class="question">
                 <h3 th:text="${questao.getIdQuestao()} + '. ' + ${questao.dsQuestao}">Título da Pergunta</h3>

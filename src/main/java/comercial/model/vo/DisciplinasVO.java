@@ -2,13 +2,13 @@ package comercial.model.vo;
 
 import jakarta.persistence.*;
 
-@Entity(name = "TURMA")
-public class TurmasVO {
+@Entity(name = "DISCIPLINAS")
+public class DisciplinasVO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_TURMA")
-    private Integer idResposta;
+    @Column(name = "ID_DISCIPLINA")
+    private Integer idDisciplina;
 
     @Column(name = "DS_TURMA")
     private String dsTurma;
@@ -19,12 +19,12 @@ public class TurmasVO {
     @JoinColumn(name = "PROFESSOR")
     private String professor;
 
-    public Integer getIdResposta() {
-        return idResposta;
+    public Integer getIdDisciplina() {
+        return idDisciplina;
     }
 
-    public void setIdResposta(Integer idResposta) {
-        this.idResposta = idResposta;
+    public void setIdDisciplina(Integer idDisciplina) {
+        this.idDisciplina = idDisciplina;
     }
 
     public String getDsTurma() {

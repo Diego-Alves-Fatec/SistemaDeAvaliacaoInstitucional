@@ -16,6 +16,7 @@
       <form action="/loginController" method="post">
         <input type="email" name="login" placeholder="Digite seu email institucional" required>
         <span th:if="${erro}" >O email informado não foi encontrado!</span>
+        <span th:if="${respondido}" >O email informado já respondeu o formulario!</span>
 <!--        <input type="password" name="senha" placeholder="Digite seu CPF" required>-->
 <!--        <a href="#">Esqueceu sua senha?</a>-->
         <button type="submit">Entrar</button>

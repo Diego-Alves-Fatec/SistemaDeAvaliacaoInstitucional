@@ -2,8 +2,8 @@ package comercial.model.vo;
 
 import jakarta.persistence.*;
 
-@Entity(name = "RESPOSTA")
-public class RespostaVO {
+@Entity(name = "RESPOSTA_INSTITUICAO")
+public class RespostaInstituicaoVO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

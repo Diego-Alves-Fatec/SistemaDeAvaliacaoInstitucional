@@ -1,7 +1,7 @@
 package comercial.controllers;
 
-import comercial.model.Util.Paginador;
 import comercial.model.vo.QuestaoVO;
+import comercial.model.vo.DisciplinasVO;
 import comercial.service.QuestaoService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -20,8 +20,9 @@ public class FormController {
     QuestaoService questaoService;
 
     @GetMapping("/exibirForm")
-    public String exibirForm(Model model,@RequestParam Map<String, String> formParams, HttpServletResponse response) {
+    public String exibirForm(Model model, @RequestParam Map<String, String> formParams, HttpServletResponse response) {
 
+        questaoService.geraCookies(formParams, response);
         List<QuestaoVO> questoes = questaoService.buscarQuestoesInstituicao();
 
         model.addAttribute("questoes", questoes);
@@ -29,13 +30,33 @@ public class FormController {
         return "questionario/instituicao";
     }
 
+    @GetMapping("/exibirFormProfessores")
+    public String exibirFormProfessores(Model model, @RequestParam Map<String, String> formParams, HttpServletResponse response) {
 
-    @PostMapping(value = "/formController")
-    public String FormController(Model model, @RequestParam Map<String, String> formParams, HttpServletResponse response, HttpServletRequest request) {
+        questaoService.geraCookies(formParams, response);
+        List<QuestaoVO> questoes = questaoService.buscarQuestoesProfessores();
+        List<DisciplinasVO> disciplinas = questaoService.buscarDisciplinas();
 
+        model.addAttribute("questoes", questoes);
+        model.addAttribute("disciplinas", disciplinas);
 
-
-        return "instituicao";
+        return "questionario/professores";
     }
 
+
+    @PostMapping("/formInstituicao")
+    public String formInstituicao(Model model, @RequestParam Map<String, String> formParams, HttpServletRequest request) {
+
+        questaoService.persistirRespostasInstituicao(formParams, request);
+
+        return "redirect:/exibirFormProfessores";
+    }
+
+    @PostMapping("/formProfessores")
+    public String formProfessores(Model model, @RequestParam Map<String, String> formParams, HttpServletRequest request) {
+
+        questaoService.persistirRespostasProfessores(formParams, request);
+
+        return "questionario/agradecimento";
+    }
 }

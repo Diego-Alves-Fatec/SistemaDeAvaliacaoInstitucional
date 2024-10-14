@@ -1,5 +1,8 @@
 package comercial.controllers;
 
+import comercial.model.repository.ItemDominioRepository;
+import comercial.model.repository.QuestaoRepository;
+import comercial.model.repository.UsuarioRepository;
 import comercial.model.vo.UsuarioVO;
 import comercial.service.QuestaoService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,47 +23,41 @@ public class LoginController {
     @Autowired
     QuestaoService questaoService;
 
+    @Autowired
+    ItemDominioRepository itemDominioRepository;
+
+    @Autowired
+    UsuarioRepository usuarioRepository;
+
     @PostMapping("/loginController")
     public String ValidaLogin(@RequestParam Map<String, String> formParams, Model model, HttpServletResponse response) {
+
         String login = formParams.get("login");
         UsuarioVO usuario = questaoService.buscarUsuarioPorEmail(login);
-
-        questaoService.geraCookies(formParams,response);
 
         if (usuario == null) {
             model.addAttribute("erro", true);
             return "index";
+        } else if(usuario.getFlagSimeNao().getIdItemDominio() == 1) {
+            model.addAttribute("respondido", true);
+            return "index";
         } else {
+            usuario.setFlagSimeNao(itemDominioRepository.findById(1).orElse(null));
+            usuarioRepository.save(usuario);
+            questaoService.geraCookies(formParams,response);
             model.addAttribute("criptografia", true);
             return "index";
         }
+
     }
 
     @PostMapping("/criptografiaController")
     public String ValidaCriptografia(@RequestParam Map<String, String> formParams, HttpServletResponse response, HttpServletRequest request) {
         try {
 
-            String login = null;
-            if (request.getCookies() != null) {
+            String index = questaoService.criptografar(formParams, request);
 
-                login = Arrays.stream(request.getCookies())
-                        .filter(cookie -> "login".equals(cookie.getName()))
-                        .map(Cookie::getValue)
-                        .distinct()
-                        .findFirst()
-                        .orElse(null);
-            }
-
-            String criptografia = formParams.get("criptografia");
-
-            if (login == null || criptografia == null) {
-                return "index";
-            }
-
-            String concatenacao = login + criptografia;
-            String valorCriptografado = questaoService.criptografar(concatenacao);
-            formParams.put("login", valorCriptografado);
-            formParams.put("criptografia", "");
+            if (index != null) return index;
 
             questaoService.geraCookies(formParams, response);
 
@@ -70,6 +67,4 @@ public class LoginController {
 
         return "redirect:/exibirForm";
     }
-
-
 }
